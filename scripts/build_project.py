@@ -45,6 +45,13 @@ def validate(data):
                     if not isinstance(k,dict) or any(not isinstance(k.get(f),(int,float)) for f in ['frame','cx','cy','zoom']): errors.append(f'{at}.keys[{j}]: needs numeric frame,cx,cy,zoom');continue
                     if k['frame']<0 or k['frame']<=previous or k['zoom']<=0: errors.append(f'{at}.keys[{j}]: increasing frames and positive zoom required')
                     previous=k['frame']
+                    # The camera must stay inside the recording: a key that reveals the empty
+                    # background reads as a letterbox mistake. Opt in with allowBackground.
+                    sw,sh,z=s.get('sourceWidth'),s.get('sourceHeight'),k['zoom']
+                    if isinstance(sw,int) and isinstance(sh,int) and sw>0 and sh>0 and not s.get('allowBackground'):
+                        W,H=data['width'],data['height'];half_w,half_h=W/(2*z),H/(2*z)
+                        if not (half_w<=k['cx']<=sw-half_w and half_h<=k['cy']<=sh-half_h):
+                            errors.append(f'{at}.keys[{j}]: at zoom {z} the camera shows outside the recording; keep cx in [{half_w:.0f},{sw-half_w:.0f}] and cy in [{half_h:.0f},{sh-half_h:.0f}], raise zoom, or set allowBackground:true on purpose')
             for dim in ['sourceWidth','sourceHeight']:
                 if not isinstance(s.get(dim),int) or s.get(dim,0)<=0:errors.append(f'{at}.{dim}: positive pixels required')
             if not isinstance(s.get('src'),str):errors.append(f'{at}.src: expected public-relative path')

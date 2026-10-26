@@ -15,6 +15,13 @@ are optional when authorized; never require API keys to use the whole skill.
 An offline espeak voice can verify a pipeline, but label it a rough technical voice,
 not finished professional narration. Do not clone someone's voice without authorization.
 
+Acronyms and product names are the usual TTS failure. Kokoro pt-br reads "Jazz CLI" as
+"Dia é 151"; written "Jazz C L I" (letters separated by spaces) it is read correctly.
+Spell initialisms with spaces in the narration text, write numbers as words when the
+reading matters ("dois giga"), and keep the on-screen title in normal spelling. The
+produce.py report lists `correctionsToReview`: a replacement on a product name means
+the voice said something else; listen to that scene's speech-NN.wav or respell it.
+
 ## Word-timed motion captions
 
 Transcribe the final speech with a local supported Whisper setup or HyperFrames.

@@ -1,0 +1,6 @@
+[
+  {"name": "hero", "text": "Um agente de código no terminal", "hold": 2.2},
+  {"name": "install", "text": "curl -fsSL https://github.com/jazzautomations/jazz-cli/releases", "offset": 300, "hold": 2.6, "zoom": 1.6},
+  {"name": "session", "text": "conserte o teste que falha no parser", "offset": 180, "hold": 5.2, "zoom": 1.45},
+  {"name": "machine", "text": "a máquina de referência", "offset": 200, "hold": 3.2, "zoom": 1.4}
+]

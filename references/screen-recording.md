@@ -8,6 +8,15 @@ and timestamped cursor positions separately; browser automation is not automatic
 a cursor recording. See scripts/record-browser.mjs for a working example and action
 format. It uses a fresh context, never a user's authenticated browser by default.
 
+Record the PRODUCT, never the desktop you are working on: a capture of your own
+terminal or editor is not footage of the thing being advertised. For a public page use
+`scripts/record-page.mjs URL targets.json`: it scrolls smoothly to each target text,
+holds, and writes marks.json with every target's time, viewport box and a camera key
+already clamped for its zoom, in the recording's own coordinates. Cut the WebM at the
+`page-ready` mark and into one clip per scene (ScreenFocus plays a clip from its
+start), then paste the camera keys into the storyboard. build_project.py rejects a
+key that shows outside the recording unless the scene sets `allowBackground: true`.
+
 For the actual desktop use OBS or an installed platform recorder. Linux X11 can use
 FFmpeg x11grab; Wayland normally needs PipeWire/portal selection. Do not claim x11grab
 works on Wayland. Keep screen/window scope and optional mic/system-audio sources
