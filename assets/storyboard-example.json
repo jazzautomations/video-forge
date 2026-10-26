@@ -1,0 +1,40 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "background": "#101710",
+  "textColor": "#F3F1E9",
+  "accent": "#D7FF64",
+  "scenes": [
+    {
+      "kind": "title",
+      "seconds": 3,
+      "eyebrow": "VIDEO FORGE",
+      "title": "Vídeo também é código.",
+      "subtitle": "Escolha peças boas. Combine com intenção."
+    },
+    {
+      "kind": "character",
+      "seconds": 3,
+      "props": {
+        "title": "Dê vida.",
+        "subtitle": "Personagens feitos em código.",
+        "backgroundColor": "#F3F1E9",
+        "bodyColor": "#829F35",
+        "accentColor": "#263A21"
+      }
+    },
+    {
+      "kind": "three",
+      "seconds": 4,
+      "color": "#D7FF64"
+    },
+    {
+      "kind": "title",
+      "seconds": 3,
+      "title": "Agora é sua vez.",
+      "subtitle": "Fontes editáveis. Render real."
+    }
+  ],
+  "durationSeconds": 13
+}

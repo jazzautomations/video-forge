@@ -1,0 +1,9 @@
+{
+  "source_url": "https://github.com/thewh1teagle/kokoro-onnx",
+  "model": "Kokoro-82M / kokoro-v1.0.onnx",
+  "voice": "pf_dora",
+  "method": "Local TTS; author-supplied Portuguese demonstration script; edited pauses",
+  "model_terms": "Model and voice distributions retain their own terms; see upstream releases",
+  "fetched_at": "2026-10-26",
+  "note": "Model weights and voice bundle are not included in this skill package"
+}

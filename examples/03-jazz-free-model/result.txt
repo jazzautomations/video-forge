@@ -1,0 +1,1 @@
+Created `evals/jazz-run2/storyboard.json` with 1920×1080 @ 30fps, three scenes (Portuguese title → character → 3D) totaling exactly 3+5+4 = 12 seconds. Validation via `python3 scripts/build_project.py evals/jazz-run2/storyboard.json --check` returned `{"ok": true, "scenes": 3}` (exit 0). No other files changed; did not render or install anything.

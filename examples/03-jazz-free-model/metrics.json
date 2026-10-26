@@ -1,0 +1,39 @@
+{
+  "session_id": "261026-094409-dd4a",
+  "status": "done",
+  "outcome": "completed",
+  "mode": "auto",
+  "exit_code": 0,
+  "start": "2026-10-26T12:44:09Z",
+  "end": "2026-10-26T12:45:07Z",
+  "duration_ms": 58381,
+  "active_ms": 58372,
+  "runs": 1,
+  "turns": 1,
+  "requests": 5,
+  "request_errors": 0,
+  "tokens_in": 45376,
+  "tokens_out": 1664,
+  "tokens_cache_read": 11552,
+  "tokens_cache_write": 0,
+  "cost_usd": 0,
+  "request_ms": 54540,
+  "tool_calls": 6,
+  "tool_errors": 0,
+  "tool_ms": 530,
+  "refused": 0,
+  "denied": 0,
+  "checkpoints": 0,
+  "compactions": 0,
+  "recoveries": 0,
+  "truncated_responses": 0,
+  "by_tool": {
+    "bash": 1,
+    "read": 4,
+    "write": 1
+  },
+  "models": {
+    "kilo/poolside/laguna-s-2.1:free": 5
+  },
+  "events": 32
+}

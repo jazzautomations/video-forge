@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "video": "out/final.mp4",
+  "duration": 20.0,
+  "elapsedSeconds": 484.375,
+  "storyboardSha256": "7cc398bee37438d68f0b348c7b9c51468032c93aee6d813976d8d12c3ef6cf50",
+  "narration": true,
+  "captionPages": 14,
+  "correctionsToReview": [
+    {
+      "scene": 2,
+      "asr": "David",
+      "script": "Dê vida",
+      "kind": "replace"
+    },
+    {
+      "scene": 4,
+      "asr": "Na ração legenda",
+      "script": "Narração, legendas",
+      "kind": "replace"
+    },
+    {
+      "scene": 4,
+      "asr": "é fácil",
+      "script": "faça o",
+      "kind": "replace"
+    }
+  ],
+  "visualReview": "Open final_sheet.png before claiming aesthetic success"
+}

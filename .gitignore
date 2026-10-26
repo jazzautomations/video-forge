@@ -1,0 +1,25 @@
+# Local runtimes, private harness state and research downloads
+.local/
+research/
+evals/
+.jazz/
+**/node_modules/
+**/__pycache__/
+*.pyc
+*.log
+.video-forge-tools/
+
+# Generated intermediate media
+**/renders/
+**/capture/
+**/out/**
+!**/out/
+!**/out/final.mp4
+!**/out/*_sheet.png
+!**/out/verification.json
+!**/out/production-report.json
+!**/out/QA.md
+examples/02-wohackers/out/
+examples/03-jazz-free-model/out/
+**/public/speech-*.wav
+**/.video-forge-project

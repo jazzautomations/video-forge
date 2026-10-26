@@ -1,0 +1,13 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "background": "#101710",
+  "textColor": "#F3F1E9",
+  "accent": "#D7FF64",
+  "scenes": [
+    {"kind": "title", "seconds": 3, "eyebrow": "WOHACKERS", "title": "Live de código aberto.", "subtitle": "Mulheres, tecnologia e criatividade em ação."},
+    {"kind": "character", "seconds": 5, "props": {"title": "Junte-se a nós.", "subtitle": "Personagens feitos em código.", "backgroundColor": "#F3F1E9", "bodyColor": "#829F35", "accentColor": "#263A21"}},
+    {"kind": "three", "seconds": 4, "color": "#D7FF64"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "path": "out/final.mp4",
+  "duration": 20.1,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30.0,
+  "audio_streams": 1,
+  "decoded": true,
+  "errors": [],
+  "visual_review": "required separately",
+  "audio_listening": "required separately"
+}

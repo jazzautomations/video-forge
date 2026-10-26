@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "historyId": "5d0cbf6a-1ea6-4ac0-92ea-98228448beed",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "DESIGN.md": {
+      "hash": "6a5804d4c2c7ba5d3e467c86a83897df79dc7f9d17bc5cc8c3a53a7d2520cda8",
+      "content": "/home/h/.cache/hyperframes/history/5d0cbf6a-1ea6-4ac0-92ea-98228448beed/blobs/6a/6a5804d4c2c7ba5d3e467c86a83897df79dc7f9d17bc5cc8c3a53a7d2520cda8"
+    },
+    "index.html": {
+      "hash": "e47ff7ce1be2f7655c57973bb45e85ded0cd7967ee98f11db68e3eca36ba4513",
+      "content": "/home/h/.cache/hyperframes/history/5d0cbf6a-1ea6-4ac0-92ea-98228448beed/blobs/e4/e47ff7ce1be2f7655c57973bb45e85ded0cd7967ee98f11db68e3eca36ba4513"
+    },
+    "package-lock.json": {
+      "hash": "ea89b02c94138c3df0595811f755696f008336773a2a1eb370087dd2a641da76",
+      "content": "/home/h/.cache/hyperframes/history/5d0cbf6a-1ea6-4ac0-92ea-98228448beed/blobs/ea/ea89b02c94138c3df0595811f755696f008336773a2a1eb370087dd2a641da76"
+    },
+    "package.json": {
+      "hash": "e17991994d9638c36c53bf249c4b6cc45e8bb4e84116cd1fd49d8a3f88ff0b11",
+      "content": "/home/h/.cache/hyperframes/history/5d0cbf6a-1ea6-4ac0-92ea-98228448beed/blobs/e1/e17991994d9638c36c53bf249c4b6cc45e8bb4e84116cd1fd49d8a3f88ff0b11"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "f0174c03-e01e-4181-9ee2-de8ab2c255bb",
+      "completedAt": 1793014676201,
+      "output": "/home/h/video-forge/library/hyperframes/editorial/renders/intro.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}
