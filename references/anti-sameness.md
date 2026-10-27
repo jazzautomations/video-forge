@@ -152,3 +152,38 @@ brief (self-generated exemplar), *then* compose conditioned on them — never co
 Every step is local, deterministic code or data. Nothing here calls a paid API or a generative
 video/image/text model — the "sampling" is over your own catalog of archetypes, themes and 129
 vetted components, not over model tokens.
+
+## The AI tells to ban (studied from the anti-slop skills)
+
+Diversity across candidates stops *repetition*; this list stops the *signatures* that read as
+"a machine made this" even on a one-off. Compiled from the leading anti-slop design skills —
+Paul Bakaus's **Impeccable** (audit → polish → harden passes over typography, color, spatial,
+motion, UX writing), Leonxlnx's **taste-skill** (MIT; layout-boldness / motion / density dials,
+and an explicit AI-tells banlist), and nexu-io's **open-design/anti-ai-slop** — mapped onto what
+this skill actually emits. These are frontend-UI skills, not video, and their licenses/vendoring
+terms are unverified, so NOTHING is copied in: only the principles are adopted.
+
+**Ban outright (the machine fingerprints):**
+- Purple→blue (or any default) linear gradient as the hero ground. Our themes are solid, toned,
+  non-`#000`/`#fff` grounds — keep it that way; never add a generic gradient wash.
+- Pure `#000` / `#fff`. Every theme already uses a toned near-black/near-white; don't override to pure.
+- Default system sans as the headline. Fixed by the vendored display/text pairing — don't fall back.
+- Everything centered. Use `anchor` (sw/nw/ne/… on title scenes) so the hero isn't always dead-center.
+- Rounded-card-inside-rounded-card, soft drop shadows, 8px-radius-everything. Not our vocabulary — don't add it.
+- Decorative motion with no job (spins, bounces, parallax-for-vibes). motion-principles.md: every move orients/confirms/delights, delight rationed.
+
+**Our OWN devices can become tells — vary them:**
+- The eyebrow + accent rule under every title is *our* template. taste-skill flags "section-number
+  eyebrows" as a tell. Keep eyebrows as WORDS not numbers, and don't stamp eyebrow+rule on every
+  single title — drop the eyebrow on some, vary the rule (or omit it) so the film isn't formulaic.
+- Em-dashes in on-screen copy read as AI. Fine in internal labels/metadata; in rendered titles and
+  narration prefer a period or a real break.
+
+**The one principle that buys the most taste:** make ONE bold, intentional move (a real display
+typeface, an asymmetric anchor, a single saturated accent) and keep everything else disciplined.
+Boldness everywhere is noise; discipline everywhere is the slop baseline. The dials idea from
+taste-skill is exactly this — turn ONE up, hold the rest. `lint_taste.py` + `lint_frame.py`
+enforce the discipline half deterministically; the bold move is the ~10% of taste you still choose.
+
+Sources studied (principles only, not vendored): Impeccable — github.com/pbakaus/impeccable;
+taste-skill — github.com/Leonxlnx/taste-skill (MIT); open-design/anti-ai-slop — github.com/nexu-io/open-design.

@@ -77,7 +77,10 @@ python3 <skill-dir>/scripts/compose.py propose --n 3 --brand "ACME" --out-dir ./
 # 2. Render each candidate's HERO FRAME (the held moment) in seconds, and LOOK at it
 python3 <skill-dir>/scripts/still.py ./candidates/candidate-1.json --frame 90 --out hero1.png \
     --node-modules <an-already-installed project's node_modules>   # repeat per candidate
-# 3. Score each hero frame against references/taste.md §2 (binary, relative gates); pick the
+# 3. GATE deterministically (free): static palette/fit + measured pixel gates. A fail = fix, don't ship.
+python3 <skill-dir>/scripts/lint_taste.py ./candidates/candidate-1.json      # contrast, <=2 fonts, fit floor
+python3 <skill-dir>/scripts/lint_frame.py hero1.png --storyboard ./candidates/candidate-1.json  # accent budget, air
+# 4. Score each hero frame against references/taste.md §2 (binary, relative gates); pick the
 #    highest-quality candidate (p~ only breaks ties), fix its top slop in ≤3 passes, THEN render.
 ```
 

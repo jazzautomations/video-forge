@@ -88,7 +88,8 @@
             "type": "string"
           },
           "eyebrow": {
-            "type": "string"
+            "type": "string",
+            "description": "Title scene eyebrow label (above headline). Defaults to the brand. Set \"\" to hide it."
           },
           "props": {
             "type": "object"
@@ -167,6 +168,25 @@
           },
           "maxTitleSize": {
             "type": "number"
+          },
+          "anchor": {
+            "type": "string",
+            "enum": [
+              "nw",
+              "n",
+              "ne",
+              "w",
+              "c",
+              "e",
+              "sw",
+              "s",
+              "se"
+            ],
+            "description": "Compass anchor for a title scene's block (EditorialTitle): sw=bottom-left, ne=top-right, c=center, w=left (default). Breaks the everything-centered look."
+          },
+          "rule": {
+            "type": "boolean",
+            "description": "Title scene: draw the accent rule under the headline (default true). Set false to drop it — vary so eyebrow+rule isn't stamped on every title."
           }
         },
         "allOf": [
