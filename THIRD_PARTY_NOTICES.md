@@ -12,10 +12,14 @@ CharacterPresenter preserves RenderComp's copyright/SPDX notice.
 | Onda | library/vendor/onda/LICENSE |
 | kajisho5/ffmpeg-skill | library/vendor/ffmpeg/LICENSE |
 | kajisho5/blender-skill | library/vendor/blender/LICENSE |
+| Vendored fonts (Inter, Space Grotesk, JetBrains Mono, Noto Serif, Noto Serif Display, Bricolage Grotesque) — SIL OFL 1.1 | assets/fonts/OFL.txt (attribution in assets/fonts/FONTS.md) |
 
 Runtime engines are installed separately and are not relicensed by this repository.
-Remotion uses its own license; FFmpeg, Blender, GSAP, model weights, voices, fonts
-and third-party media retain their own terms. The repository does not bundle model
+Remotion uses its own license; FFmpeg, Blender, GSAP, model weights, voices
+and third-party media retain their own terms. The display/text fonts in
+assets/fonts are vendored under the SIL OFL 1.1 (redistributable; subsetted and
+converted to .woff2 locally, outlines unmodified, no Reserved Font Names used) and
+the license travels with them into every generated project — see assets/fonts/FONTS.md. The repository does not bundle model
 weights, FFmpeg/Blender executables or private account credentials.
 
 The local demo UI, recording and Python sound bed are authored demonstration assets.

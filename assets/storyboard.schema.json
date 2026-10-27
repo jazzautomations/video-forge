@@ -48,7 +48,13 @@
     "transition": {
       "type": "string",
       "description": "Default seam between scenes. Per-scene 'transition' overrides it.",
-      "enum": ["wipe", "push", "fade", "iris", "none"]
+      "enum": [
+        "wipe",
+        "push",
+        "fade",
+        "iris",
+        "none"
+      ]
     },
     "scenes": {
       "type": "array",
@@ -148,7 +154,13 @@
           },
           "transition": {
             "type": "string",
-            "enum": ["wipe", "push", "fade", "iris", "none"]
+            "enum": [
+              "wipe",
+              "push",
+              "fade",
+              "iris",
+              "none"
+            ]
           },
           "titleSize": {
             "type": "number"
@@ -217,6 +229,37 @@
     },
     "music": {
       "type": "boolean"
+    },
+    "displayFont": {
+      "type": "string",
+      "description": "CSS font stack for headlines (EditorialTitle). Set by a theme to its DISPLAY font; falls back to fontFamily."
+    },
+    "textFont": {
+      "type": "string",
+      "description": "CSS font stack for body/subtitles/components. Set by a theme to its TEXT font; falls back to fontFamily."
+    },
+    "fonts": {
+      "type": "array",
+      "description": "Vendored @font-face set the project loads from public/fonts (build_project copies these .woff2). Stamped by compose.py from the theme.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "family": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "family",
+          "weight",
+          "file"
+        ]
+      }
     }
   }
 }

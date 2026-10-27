@@ -58,8 +58,32 @@ Pick deliberately:
   serif), `terminal-green` (dev/hacker), `royal-gold` (luxe), `ocean-steel` (corporate),
   `cyber-magenta`/`electric-indigo` (bold tech), `mono-noir` (minimal). 5 archetypes × 9
   themes = 45 distinct looks before you touch a word; `--seed` multiplies that.
+- **Real fonts, vendored & local:** each theme pairs a DISPLAY font (headlines) with a
+  TEXT font (body) — e.g. Space Grotesk/Inter, Noto Serif Display/Noto Serif, JetBrains
+  Mono, Bricolage Grotesque. They are SIL OFL `.woff2` in `assets/fonts` (subsetted, no
+  download), copied into each project's `public/fonts` and loaded via `delayRender` so the
+  render never falls back to Arial/Georgia. compose.py stamps `displayFont`/`textFont` and
+  the per-font `titleAdvance` that keeps the title-fit math safe. This is the single biggest
+  lift over system fonts — don't bypass it by hand-setting a bare `fontFamily`.
 - Never ship the `midnight-lime` / WOHACKERS defaults unless the brand truly is lime-on-dark.
   If asked for options, compose 2–3 with different theme/`--seed` and compare frames.
+
+**The variety + taste pass (do this, not the default).** Diversity collapse is real: a model
+left to itself ships the one typical look. So force a diverse candidate set, then judge it:
+
+```bash
+# 1. Emit N DELIBERATELY DIFFERENT candidates (distinct archetype + spread themes + seeds)
+python3 <skill-dir>/scripts/compose.py propose --n 3 --brand "ACME" --out-dir ./candidates
+# 2. Render each candidate's HERO FRAME (the held moment) in seconds, and LOOK at it
+python3 <skill-dir>/scripts/still.py ./candidates/candidate-1.json --frame 90 --out hero1.png \
+    --node-modules <an-already-installed project's node_modules>   # repeat per candidate
+# 3. Score each hero frame against references/taste.md §2 (binary, relative gates); pick the
+#    highest-quality candidate (p~ only breaks ties), fix its top slop in ≤3 passes, THEN render.
+```
+
+Read [anti-sameness](references/anti-sameness.md) for why/how the candidate set is built, and
+[taste](references/taste.md) for the rubric and the bounded critic loop. This is the difference
+between "diverse mediocrity" and good: the composer stops sameness, the taste pass stops slop.
 
 Rules for a weak model: compose.py writes a valid storyboard; you then edit ONLY its
 text/narration/seconds/numbers. Never invoke `produce.py`/`build_project.py` with system
@@ -157,6 +181,8 @@ retains upstream terms. Their code is not automatically tested by being bundled.
 
 For downloaded clips/stock use [media pipeline](references/media-pipeline.md).
 For motion decisions use [motion principles](references/motion-principles.md).
+For non-repetitive output use [anti-sameness](references/anti-sameness.md); for good-vs-slop
+judgment use [taste](references/taste.md) (render a hero frame with `scripts/still.py`, then score it).
 
 ## Assemble a multi-engine film
 

@@ -26,7 +26,11 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 from build_project import validate  # noqa: E402
 
 def _load(p): return json.loads(Path(p).read_text())
-THEMES = _load(ASSETS / 'themes.json')['themes']
+_THEMES_DOC = _load(ASSETS / 'themes.json')
+THEMES = _THEMES_DOC['themes']
+FONTS = _THEMES_DOC['fonts']      # family -> [{w,f}] faces vendored in assets/fonts
+STACKS = _THEMES_DOC['stacks']    # family -> CSS font stack with fallbacks
+ADVANCE = _THEMES_DOC['advance']  # display family -> EditorialTitle fit advance
 SAFE = {i['id']: i for i in _load(ASSETS / 'safe-components.json')['items']}
 ARCH_DIR = ASSETS / 'archetypes'
 ARCHETYPES = sorted(p.stem for p in ARCH_DIR.glob('*.json'))
@@ -50,8 +54,18 @@ def _apply_theme(spec, theme, keep_transition=False):
     spec['background'] = theme['background']
     spec['textColor'] = theme['textColor']
     spec['accent'] = theme['accent']
-    spec['fontFamily'] = theme['fontFamily']
-    spec['titleAdvance'] = theme['titleAdvance']
+    # A theme pairs a DISPLAY font (headlines) with a TEXT font (body/components).
+    disp, txt = theme['display'], theme['text']
+    spec['displayFont'] = STACKS[disp]
+    spec['textFont'] = STACKS[txt]
+    spec['fontFamily'] = STACKS[txt]      # components + body inherit the text family
+    spec['titleAdvance'] = ADVANCE[disp]  # fit math uses the DISPLAY font's advance
+    # The exact @font-face set this video needs (display+text families, de-duped), so
+    # build_project copies just these .woff2 into public/fonts and registers them.
+    faces = []
+    for fam in dict.fromkeys([disp, txt]):
+        faces += [{'family': fam, 'weight': face['w'], 'file': face['f']} for face in FONTS[fam]]
+    spec['fonts'] = faces
     if not keep_transition:
         spec['transition'] = theme['transition']
 
@@ -103,15 +117,21 @@ def cmd_components(args):
         print(f'{star} {ident:34s} {use}')
     print(f'\n{sum(1 for r in rows)} match; * = featured/ready. All render through build_project.py.')
 
-def cmd_new(args):
-    if args.archetype not in ARCHETYPES:
-        sys.exit(f'unknown archetype {args.archetype!r}; choose from: {", ".join(ARCHETYPES)}')
-    spec = _load(ARCH_DIR / f'{args.archetype}.json')
-    theme_name = args.theme or spec.get('_meta', {}).get('defaultTheme', 'midnight-lime')
+# Themes ordered to MAXIMISE perceptual spread (light / dark-warm / dark-cool / mono),
+# so stepping through this list hands back looks that are far apart, not neighbours.
+THEME_SPREAD = ['paper-ink', 'terminal-green', 'cyber-magenta', 'royal-gold', 'ocean-steel',
+                'midnight-lime', 'sunset-warm', 'electric-indigo', 'mono-noir']
+
+def _compose(archetype, theme_name, seed, brand):
+    """Build one validated storyboard spec from archetype + theme (+ seed). Returns (spec, errs)."""
+    if archetype not in ARCHETYPES:
+        return None, [f'unknown archetype {archetype!r}']
+    spec = _load(ARCH_DIR / f'{archetype}.json')
+    theme_name = theme_name or spec.get('_meta', {}).get('defaultTheme', 'midnight-lime')
     if theme_name not in THEMES:
-        sys.exit(f'unknown theme {theme_name!r}; choose from: {", ".join(THEMES)}')
+        return None, [f'unknown theme {theme_name!r}']
     theme = THEMES[theme_name]
-    rng = random.Random(args.seed) if args.seed is not None else None
+    rng = random.Random(seed) if seed is not None else None
     if rng:
         used = set()
         for s in spec['scenes']:
@@ -120,14 +140,17 @@ def cmd_new(args):
     _apply_theme(spec, theme, keep_transition=False)
     if rng:
         spec['transition'] = rng.choice(TRANSITIONS)
-    if args.brand:
-        spec['brand'] = args.brand
+    if brand:
+        spec['brand'] = brand
     for s in spec['scenes']:
         if s.get('kind') == 'component':
             _stamp_component(s, theme)
     spec['durationSeconds'] = round(sum(s['seconds'] for s in spec['scenes']), 4)
-    spec.setdefault('_meta', {}).update({'theme': theme_name, 'seed': args.seed, 'archetype': args.archetype})
-    errs = validate(spec)
+    spec.setdefault('_meta', {}).update({'theme': theme_name, 'seed': seed, 'archetype': archetype})
+    return spec, validate(spec)
+
+def cmd_new(args):
+    spec, errs = _compose(args.archetype, args.theme, args.seed, args.brand)
     if errs:
         print('composed storyboard FAILED validation:', file=sys.stderr)
         for e in errs:
@@ -137,11 +160,47 @@ def cmd_new(args):
     out.write_text(json.dumps(spec, indent=2, ensure_ascii=False) + '\n')
     comps = [s['component'] for s in spec['scenes'] if s.get('kind') == 'component']
     print(f'wrote {out}')
-    print(f'  archetype={args.archetype}  theme={theme_name}  seed={args.seed}  '
-          f'scenes={len(spec["scenes"])}  duration={spec["durationSeconds"]}s')
+    print(f'  archetype={spec["_meta"]["archetype"]}  theme={spec["_meta"]["theme"]}  '
+          f'seed={args.seed}  scenes={len(spec["scenes"])}  duration={spec["durationSeconds"]}s')
     print(f'  components: {", ".join(comps) or "(built-in scenes only)"}')
     print('  next: edit ONLY text/narration/numbers, then  python3 scripts/run.py '
           f'{out} --out ./film')
+
+def cmd_propose(args):
+    """Verbalized-Sampling substrate: emit N DELIBERATELY DIFFERENT candidates at once, so
+    the model judges a diverse set (taste.md rubric) and picks/refines, instead of falling
+    into the one 'typical' look. Diversity by construction: distinct archetypes, themes
+    stepped across the perceptual spread, varied seeds/transitions."""
+    n = max(2, min(args.n, len(THEME_SPREAD)))
+    avoid = set((args.avoid or '').split(',')) - {''}
+    out_dir = Path(args.out_dir); out_dir.mkdir(parents=True, exist_ok=True)
+    archs = [a for a in ['kinetic-promo', 'calm-explainer', 'data-story', 'launch-hype', 'screen-demo']
+             if a in ARCHETYPES and a not in avoid]
+    themes = [t for t in THEME_SPREAD if t in THEMES and t not in avoid]
+    base = random.Random(args.seed if args.seed is not None else 0)
+    rows, i, picks = [], 0, 0
+    used_pairs = set()
+    while picks < n and i < n * 4:
+        arch = archs[picks % len(archs)]
+        theme = themes[(picks * 4 + i) % len(themes)]  # stride to spread hues/lightness
+        i += 1
+        if (arch, theme) in used_pairs:
+            continue
+        used_pairs.add((arch, theme))
+        seed = base.randint(1, 9999)
+        spec, errs = _compose(arch, theme, seed, args.brand)
+        if errs:
+            continue
+        p = out_dir / f'candidate-{picks + 1}.json'
+        p.write_text(json.dumps(spec, indent=2, ensure_ascii=False) + '\n')
+        rows.append((p.name, arch, theme, spec.get('transition'),
+                     THEMES[theme]['label'].split('—')[-1].strip()))
+        picks += 1
+    print(f'wrote {picks} deliberately different candidates to {out_dir}/')
+    for name, arch, theme, tr, feel in rows:
+        print(f'  {name}: {arch:15s} + {theme:15s} [{tr}] — {feel}')
+    print('\nNow apply the taste rubric (references/taste.md §2) to each candidate\'s HERO '
+          'frame, pick or synthesize the best fit for the brief, then edit its text.')
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -156,6 +215,13 @@ def main():
     pn.add_argument('--brand')
     pn.add_argument('--out', required=True)
     pn.set_defaults(func=cmd_new)
+    pp = sub.add_parser('propose', help='emit N deliberately different candidates (anti-sameness)')
+    pp.add_argument('--n', type=int, default=3)
+    pp.add_argument('--brand')
+    pp.add_argument('--seed', type=int)
+    pp.add_argument('--avoid', help='comma-separated archetypes/themes to skip')
+    pp.add_argument('--out-dir', default='./candidates')
+    pp.set_defaults(func=cmd_propose)
     args = ap.parse_args()
     args.func(args)
 
