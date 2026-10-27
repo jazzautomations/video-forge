@@ -47,7 +47,22 @@ def restore_script(asr,text):
         changes.append({'asr':' '.join(x['text'] for x in asr[a:b]),'script':' '.join(wanted[c:d]),'kind':tag})
         if c==d:continue
         if a==b:
-            raise ValueError('ASR omitted script words; review audio instead of fabricating timestamps: '+' '.join(wanted[c:d]))
+            # ASR produced no tokens for these authored words — it dropped them. A swallowed
+            # short function word ("a", "o", "e", "é") is an ASR artifact, not a reason to fail
+            # the whole render, so place the dropped words in the gap between the previous output
+            # word and the next ASR word (still recorded in `changes`). Refuse only when a lot was
+            # dropped at once, which signals a genuine transcription failure worth reviewing.
+            tokens=wanted[c:d]
+            if sum(len(normalized(w)) for w in tokens)>12:
+                raise ValueError('ASR omitted substantial script words; review audio instead of fabricating timestamps: '+' '.join(tokens))
+            prev_end=output[-1]['endMs'] if output else (asr[a]['startMs'] if a<len(asr) else 0)
+            nxt_start=asr[a]['startMs'] if a<len(asr) else prev_end+140*len(tokens)
+            if nxt_start<=prev_end:nxt_start=prev_end+140*len(tokens)
+            lengths=[max(1,len(normalized(w))) for w in tokens];total=sum(lengths);at=prev_end
+            for word,length in zip(tokens,lengths):
+                until=at+(nxt_start-prev_end)*length/total
+                output.append({'text':word,'startMs':round(at),'endMs':round(until)});at=until
+            continue
         start,end=asr[a]['startMs'],asr[b-1]['endMs'];tokens=wanted[c:d]
         lengths=[max(1,len(normalized(w))) for w in tokens];total=sum(lengths);at=start
         for word,length in zip(tokens,lengths):
