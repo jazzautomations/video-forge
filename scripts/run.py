@@ -25,6 +25,10 @@ def main():
  cmd+=[a.storyboard,'--out',a.out,'--whisper-model',a.whisper_model]
  for key,flag in [('kokoroModel','--kokoro-model'),('voices','--voices')]:
   if config.get(key):cmd += [flag,config[key]]
+ # Reuse a prepared node_modules when the environment names one, so the full video path
+ # never shells out to npm install/ci. This removes the dependency-orchestration step that
+ # trips up weaker driving models (hallucinated/garbled npm commands, blocked downloads).
+ if config.get('nodeModules'):cmd += ['--node-modules',config['nodeModules']]
  if a.browser:cmd += ['--browser',a.browser]
  if a.resume:cmd += ['--resume']
  if a.draft:cmd += ['--draft']
