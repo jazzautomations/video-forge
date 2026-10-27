@@ -101,7 +101,13 @@ def main():
         rel=(Path('vendor')/family/source.relative_to(base)).as_posix().removesuffix('.tsx')
         imports.append(f"import {{{name} as Piece{i},{defaults} as Defaults{i}}} from './{rel}';")
         props=f"Defaults{i}.parse({{placement:'center',fontFamily:spec.fontFamily??'Arial',color:spec.textColor,accentColor:spec.accent,...s.props}})" if is_schema else f"{{...Defaults{i},backgroundColor:spec.background,textColor:spec.textColor,accentColor:spec.accent,...s.props}}"
-        component_cases.append(f"if(s.component==={json.dumps(scene['component'])}) return <AbsoluteFill style={{{{background:spec.background??'#101710'}}}}><Piece{i} {{...({props})}}/></AbsoluteFill>;")
+        # onda components read the theme from CSS custom properties (var(--onda-accent) etc.),
+        # NOT only from props — set them on the wrapper so every onda scene adopts the palette
+        # (otherwise e.g. a chapter number keeps onda's default rose in a green film).
+        # onda vars need `as any` — Remotion's style type is csstype (no CSS custom-property keys)
+        wrap=("{{background:spec.background??'#101710',['--onda-bg']:spec.background,['--onda-text']:spec.textColor,['--onda-accent']:spec.accent} as any}"
+              if family=='onda' else "{{background:spec.background??'#101710'}}")
+        component_cases.append(f"if(s.component==={json.dumps(scene['component'])}) return <AbsoluteFill style={wrap}><Piece{i} {{...({props})}}/></AbsoluteFill>;")
     clauses=["if(s.kind==='title') return <EditorialTitle title={s.title} subtitle={s.subtitle} eyebrow={s.eyebrow??spec.brand} background={spec.background} color={spec.textColor} accent={spec.accent} closing={s.closing??false} titleSize={s.titleSize} maxTitleSize={s.maxTitleSize} fontFamily={spec.fontFamily??'Arial,sans-serif'} advance={spec.titleAdvance??0.54} {...s.props}/>;"]
     if 'character' in kinds:clauses.append("if(s.kind==='character') return <CharacterPresenter {...defaultCharacterProps} backgroundColor={spec.background??'#101710'} bodyColor={spec.accent??'#D7FF64'} accentColor={spec.accent??'#D7FF64'} textColor={spec.textColor??'#F3F1E9'} skinColor='#DFA06A' {...s.props}/>;")
     if 'screen' in kinds:clauses.append("if(s.kind==='screen') return <ScreenFocus {...s} src={staticFile(s.src)}/>;")

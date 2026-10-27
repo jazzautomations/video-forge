@@ -61,6 +61,23 @@ Pick deliberately:
 - Never ship the `midnight-lime` / WOHACKERS defaults unless the brand truly is lime-on-dark.
   If asked for options, compose 2–3 with different theme/`--seed` and compare frames.
 
+**The variety + taste pass (do this, not the default).** Diversity collapse is real: a model
+left to itself ships the one typical look. So force a diverse candidate set, then judge it:
+
+```bash
+# 1. Emit N DELIBERATELY DIFFERENT candidates (distinct archetype + spread themes + seeds)
+python3 <skill-dir>/scripts/compose.py propose --n 3 --brand "ACME" --out-dir ./candidates
+# 2. Render each candidate's HERO FRAME (the held moment) in seconds, and LOOK at it
+python3 <skill-dir>/scripts/still.py ./candidates/candidate-1.json --frame 90 --out hero1.png \
+    --node-modules <an-already-installed project's node_modules>   # repeat per candidate
+# 3. Score each hero frame against references/taste.md §2 (binary, relative gates); pick the
+#    highest-quality candidate (p~ only breaks ties), fix its top slop in ≤3 passes, THEN render.
+```
+
+Read [anti-sameness](references/anti-sameness.md) for why/how the candidate set is built, and
+[taste](references/taste.md) for the rubric and the bounded critic loop. This is the difference
+between "diverse mediocrity" and good: the composer stops sameness, the taste pass stops slop.
+
 Rules for a weak model: compose.py writes a valid storyboard; you then edit ONLY its
 text/narration/seconds/numbers. Never invoke `produce.py`/`build_project.py` with system
 `python3` for the full video — always go through `run.py`. Never edit a `.tsx`/`.py` source
@@ -157,6 +174,8 @@ retains upstream terms. Their code is not automatically tested by being bundled.
 
 For downloaded clips/stock use [media pipeline](references/media-pipeline.md).
 For motion decisions use [motion principles](references/motion-principles.md).
+For non-repetitive output use [anti-sameness](references/anti-sameness.md); for good-vs-slop
+judgment use [taste](references/taste.md) (render a hero frame with `scripts/still.py`, then score it).
 
 ## Assemble a multi-engine film
 
