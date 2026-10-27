@@ -12,6 +12,68 @@ Exit 0 if every gate passes; exit 1 and print JSON {fails,warns} otherwise.
 import json, re, sys
 from pathlib import Path
 
+# Placeholder / scaffolding strings that must be replaced with real content before shipping.
+# These are the compose.py template defaults, the component defaults (gradient-text-sweep's
+# "ACME INC." / "BUILD BOLD", kinetic-word-stack's "BUILD WHAT MATTERS NOW", end-card's
+# "Thanks for watching"...), and generic filler. A weak model that leaves any of them produces
+# instant slop (observed: "GANCHO" and "ACME INC." leaked on real renders).
+_PLACEHOLDER_SUBSTR = [
+    'acme', 'build bold', 'build what matters', 'thanks for watching',
+    'learn more at our site', 'visit our website', 'seusite.com.br', 'seusite.com',
+    'titulo do seu produto', 'título do seu produto', 'promessa em uma linha',
+    'esse e o seu produto', 'esse é o seu produto', 'seu endereco ou chamada',
+    'seu endereço ou chamada', 'forma. luz. movimento', 'feito pra voce', 'feito pra você',
+    'rapido. bonito. seu', 'rápido. bonito. seu', 'lorem ipsum', 'your headline',
+    'your text here', 'your title', 'your brand', 'sua chamada aqui', 'seu site aqui',
+    'saiba mais no nosso site',
+]
+# One-word structural labels: if a visible string IS just one of these, it is a leaked label.
+_STRUCT_LABELS = {
+    'gancho', 'hook', 'cta', 'eyebrow', 'headline', 'subhead', 'title', 'titulo', 'título',
+    'subtitle', 'subtitulo', 'placeholder', 'intro', 'outro', 'beat', 'tagline', 'texto',
+    'lorem', 'ipsum', 'tbd', 'todo', 'xxx', 'teste',
+}
+
+def _norm(t):
+    return re.sub(r'\s+', ' ', str(t).strip().lower())
+
+def _visible_strings(spec):
+    """(location, text) for every human-visible string in the storyboard (and narration)."""
+    out = []
+    if spec.get('brand'): out.append(('brand', spec['brand']))
+    for i, s in enumerate(spec.get('scenes', [])):
+        for k in ('title', 'subtitle', 'eyebrow', 'narration'):
+            if s.get(k): out.append((f'scene[{i}].{k}', s[k]))
+        p = s.get('props') or {}
+        for k in ('headline', 'subline', 'title', 'subtitle', 'ctaText', 'label', 'text'):
+            if isinstance(p.get(k), str) and p[k]: out.append((f'scene[{i}].props.{k}', p[k]))
+        if isinstance(p.get('words'), list) and p['words']:
+            out.append((f'scene[{i}].props.words', ' '.join(map(str, p['words']))))
+    return out
+
+def _template_defaults(spec):
+    """Normalized default visible strings for the composed archetype. A storyboard string that
+    still EXACTLY matches one means that scene was never edited — real content for THIS video was
+    never written (no false positives: nobody writes a whole template sentence verbatim by chance).
+    Eyebrows are excluded (a short generic kicker like "COMO FUNCIONA" is fine to keep)."""
+    arch = (spec.get('_meta') or {}).get('archetype')
+    if not arch: return set()
+    p = Path(__file__).resolve().parent.parent / 'assets' / 'archetypes' / f'{arch}.json'
+    try:
+        d = json.loads(p.read_text())
+    except Exception:
+        return set()
+    defs = set()
+    for s in (d.get('scenes') or d.get('beats') or []):
+        for k in ('title', 'subtitle', 'narration'):
+            if s.get(k): defs.add(_norm(s[k]))
+        pr = s.get('props') or {}
+        for k in ('headline', 'subline', 'title', 'subtitle', 'ctaText', 'label', 'text'):
+            if isinstance(pr.get(k), str) and pr[k]: defs.add(_norm(pr[k]))
+        if isinstance(pr.get('words'), list) and pr['words']:
+            defs.add(_norm(' '.join(map(str, pr['words']))))
+    return {d for d in defs if len(d) >= 6}
+
 def _lin(c):
     c = c / 255.0
     return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
@@ -76,6 +138,38 @@ def lint(spec):
             fails.append(f'scene[{i}] title overflows: titleSize {size:.0f}px * {n} chars > frame width')
         elif size < floor:
             fails.append(f'scene[{i}] title "{s["title"][:40]}" fits only at {size:.0f}px (< {floor:.0f}px floor) — shorten it')
+
+    # Gate (slop): no placeholder / scaffolding / unedited template text on screen or in narration.
+    tdefs = _template_defaults(spec)
+    for loc, txt in _visible_strings(spec):
+        n = _norm(txt)
+        label = n.strip(' .,:;!?-—–"\'')
+        if label in _STRUCT_LABELS:
+            fails.append(f'{loc} is a bare placeholder label "{txt}" — write real content')
+            continue
+        if next((ph for ph in _PLACEHOLDER_SUBSTR if ph in n), None):
+            fails.append(f'{loc} still has template/placeholder text "{txt}" — replace it with real content')
+            continue
+        if n in tdefs and not loc.endswith('.eyebrow'):
+            fails.append(f'{loc} is unchanged template text "{txt}" — write real content for THIS video')
+
+    # Gate (pacing): narration must fit its beat; total duration stays short-promo length.
+    # pt-br delivery is ~14.5 characters/second; narration far longer than its scene overruns it.
+    for i, s in enumerate(spec.get('scenes', [])):
+        narr, secs = s.get('narration'), s.get('seconds')
+        if not narr or not secs: continue
+        est = len(narr) / 14.5
+        if est > secs * 1.75:
+            fails.append(f'scene[{i}] narration ~{est:.1f}s overruns its {secs}s beat — shorten the narration or lengthen the scene')
+        elif est > secs * 1.3:
+            warns.append(f'scene[{i}] narration ~{est:.1f}s is tight for its {secs}s beat')
+    dur = spec.get('durationSeconds') or sum(s.get('seconds', 0) for s in spec.get('scenes', []))
+    checks['durationSeconds'] = round(dur, 1)
+    if dur > 75:
+        fails.append(f'total duration {dur:.0f}s is far too long for a short (keep it under ~45s)')
+    elif dur > 48:
+        warns.append(f'total duration {dur:.0f}s is long for a short promo — consider trimming toward ~30s')
+
     return {'ok': not fails, 'fails': fails, 'warns': warns, 'checks': checks}
 
 def main():

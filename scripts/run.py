@@ -16,8 +16,21 @@ def main():
  ap.add_argument('--draft',action='store_true',help='Fast silent preview render, then stop')
  ap.add_argument('--background',action='store_true',help='Launch via production_job and return immediately (for harnesses whose bash calls time out); poll with production_job.py status')
  ap.add_argument('--wait',action='store_true',help='Run the durable background job but BLOCK in this one command until the MP4 is done, then exit with its code. One line, no external poll loop — the robust path for an autonomous agent.')
+ ap.add_argument('--skip-taste',action='store_true',help='Skip the deterministic taste gate (intentional override).')
  a=ap.parse_args()
  if a.wait:a.background=True
+ # Refuse to spend minutes rendering slop: enforce the taste gate before launch (leaked
+ # placeholder text, narration that overruns its beat, bad contrast). --draft previews motion
+ # so it is exempt; --skip-taste is the explicit override.
+ if not a.draft and not a.skip_taste:
+  try:
+   sys.path.insert(0,str(Path(__file__).resolve().parent));import lint_taste
+   tl=lint_taste.lint(json.loads(Path(a.storyboard).read_text()))
+  except Exception:
+   tl=None
+  if tl and not tl['ok']:
+   print(json.dumps({'ok':False,'stage':'taste-gate','fails':tl['fails'],'hint':'fix the storyboard text/pacing, or pass --skip-taste to override'},indent=2,ensure_ascii=False))
+   raise SystemExit(1)
  if not a.environment.exists():ap.error('Prepare once: python3 scripts/setup_environment.py --out .video-forge-tools --audio')
  config=json.loads(a.environment.read_text())
  # Default: run produce.py directly and BLOCK until the MP4 is done, so one command = finished video.
