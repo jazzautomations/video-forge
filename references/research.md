@@ -122,3 +122,39 @@ reference-linked examples and small repair steps can reduce avoidable model erro
 We externalize component defaults, timing math, encode details and scene recipes.
 We have not established weak/strong parity. Follow evaluation.md before making that
 claim. Neither model marketing descriptions nor one hand-authored demo proves it.
+
+## Competitive landscape (2026-10-27 study sweep)
+
+Where Video Forge sits among code-driven and agentic video tools, and the honest gaps.
+
+- **Remotion** (the React engine this skill drives) is the most mature code-video tool;
+  **Motion Canvas** is canvas/imperative for hand-crafted explainers; **Revideo** is a
+  headless Motion Canvas fork aimed at pipelines (reportedly folded into a commercial
+  editor, verify). These are engines, not agents.
+- **OpenMontage** (AGPL-3.0, new in 2026) is the closest AGENT system: a coding assistant
+  orchestrates research→script→assets→edit→compose, with 11 pipelines, word-level captions
+  (WhisperX), b-roll from Archive.org/NASA/Wikimedia/Pexels, many TTS/music providers, and
+  budget controls. But it leans hard on **paid/cloud generative video** (Kling, Runway,
+  Veo, HeyGen, MiniMax) and avatar/lip-sync models, and is AGPL (do not vendor).
+
+**Video Forge's lane — deliberately different:** 100% code, fully local, reproducible,
+MIT, **no paid services and no generative video/image/talking-head models** (SKILL.md
+contract). Every frame is seekable and deterministic. In that lane it already matches the
+field on local narration (Kokoro), word-level captions (faster-whisper), multi-engine
+composition (Remotion + HyperFrames + FFmpeg, see assemble.py) and finish, and it is ahead
+on **non-repetitive output from a weak model** (themes + archetypes + a 129-scene vetted
+catalog via compose.py). The generative-model and avatar features above are NOT gaps to
+close here; they are out of contract by design.
+
+**In-contract frontier (license-clean, no paid service) worth building next:**
+- Automated **open-archive b-roll**: keyword/CLIP search over Archive.org, Wikimedia
+  Commons and NASA (public-domain motion), cut and placed with the FFmpeg layer. Extends
+  asset-sourcing.md from manual to orchestrated.
+- **Beat-synced cutting**: wire the already-referenced librosa/BeatNet beat grid
+  (libraries.md) into cut points instead of leaving it route-only.
+- **More archetypes** (documentary-montage, podcast-repurpose) and a `chrome-headless-shell`
+  install so HyperFrames renders at full speed instead of the screenshot fallback.
+
+Sources: Remotion's own compare docs; buildwithmatija and wireflow.ai alternative round-ups;
+the OpenMontage README (gitee mirror). Figures are the projects' own claims; verify before
+quoting.
