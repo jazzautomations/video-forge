@@ -12,7 +12,8 @@ export const COLORS = {
 } as const;
 
 export const FONT = {
-  // Load real web fonts via @remotion/google-fonts; these are the stacks.
+  // Fonts are vendored locally (SIL OFL .woff2 in assets/fonts); import ./fonts once to load
+  // them from public/fonts (no network). These are the stacks.
   sans: "'Inter', system-ui, -apple-system, sans-serif",
   mono: "'JetBrains Mono', ui-monospace, monospace",
 } as const;

@@ -1,0 +1,10 @@
+{
+  "label": "Jazz Automations — lime accent on indigo ink, geometric",
+  "brand": "JAZZ AUTOMATIONS",
+  "base": "electric-indigo",
+  "accent": "#D7FF64",
+  "display": "Space Grotesk",
+  "text": "Inter",
+  "transition": "push",
+  "titleAnchor": "w"
+}
