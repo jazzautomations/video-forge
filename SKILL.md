@@ -88,6 +88,22 @@ Read [anti-sameness](references/anti-sameness.md) for why/how the candidate set 
 [taste](references/taste.md) for the rubric and the bounded critic loop. This is the difference
 between "diverse mediocrity" and good: the composer stops sameness, the taste pass stops slop.
 
+**Consistency ON PURPOSE (a brand identity).** The inverse of the variety pass: when many videos
+must look like the SAME brand, save an identity once and reuse it — palette, font pairing,
+wordmark, default transition/anchor locked together.
+
+```bash
+python3 <skill-dir>/scripts/compose.py brands                      # list saved identities
+python3 <skill-dir>/scripts/compose.py new --brand-profile jazz --archetype kinetic-promo --out ./sb.json
+python3 <skill-dir>/scripts/compose.py propose --brand-profile jazz --n 3 --out-dir ./cands  # SAME look, 3 structures
+```
+
+A profile is `assets/brands/<name>.json` (inherit a `base` theme + override, or fully specify
+colours + vendored fonts + wordmark) — see [assets/brands/README.md](assets/brands/README.md).
+With `--brand-profile`, `propose` holds the identity constant and varies only the STRUCTURE, so
+you get a consistent brand without the videos feeling copy-pasted. Use variety mode to EXPLORE a
+look, then promote the winner into a brand profile to REPRODUCE it.
+
 Rules for a weak model: compose.py writes a valid storyboard; you then edit ONLY its
 text/narration/seconds/numbers. Never invoke `produce.py`/`build_project.py` with system
 `python3` for the full video — always go through `run.py`. Never edit a `.tsx`/`.py` source
