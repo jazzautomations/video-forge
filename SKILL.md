@@ -41,8 +41,11 @@ python3 <skill-dir>/scripts/compose.py new \
 python3 <skill-dir>/scripts/build_project.py ./storyboard.json --check
 python3 <skill-dir>/scripts/run.py ./storyboard.json --out ./film
 #    run.py BLOCKS until the MP4 is done. If interrupted, resume the SAME command with
-#    --resume (do not start over). If your bash calls time out, add --background and poll
-#    with production_job.py status instead.
+#    --resume (do not start over). If your bash calls time out on the long render, add
+#    --wait: it runs the render as a durable job but still blocks in that ONE command until
+#    the file is done (then exits with its code) — no hand-rolled poll loop to babysit, which
+#    is what you want for an autonomous/weaker agent. (--background alone returns immediately
+#    and leaves you to poll production_job.py status; prefer --wait.)
 
 # 4. Verify the real file
 python3 <skill-dir>/scripts/verify_video.py ./film/out/final.mp4 --require-audio
