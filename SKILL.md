@@ -35,9 +35,17 @@ python3 <skill-dir>/scripts/compose.py new \
     --archetype kinetic-promo --theme sunset-warm --brand "ACME" --out ./storyboard.json
 #    Add --seed N to re-arrange interchangeable scenes for a fresh take.
 #    Then edit ONLY the text/narration/seconds/numbers in ./storyboard.json.
+#    compose.py fills every scene with PLACEHOLDER/template text on purpose (e.g. "O título do
+#    seu produto", "ACME", "seusite.com.br"). You MUST replace ALL of it with real content for
+#    THIS video — leave a word of it and the taste gate below refuses to render (it detects
+#    placeholder text, bare labels, and any string left equal to the template default). Also keep
+#    each scene's narration short enough to be spoken within its `seconds` (~14.5 chars/s pt-br),
+#    and the total under ~45s — the gate fails narration that overruns its beat and over-long films.
 
 # 3. Validate, then render to MP4. run.py is THE entrypoint: it picks the prepared
 #    interpreter and model paths and runs voice→captions→scenes→sound→render→checks.
+#    --check now ALSO runs the deterministic taste gate; run.py enforces it too and will refuse
+#    to render slop (fix the reported text/pacing, or pass --skip-taste to override deliberately).
 python3 <skill-dir>/scripts/build_project.py ./storyboard.json --check
 python3 <skill-dir>/scripts/run.py ./storyboard.json --out ./film
 #    run.py BLOCKS until the MP4 is done. If interrupted, resume the SAME command with
