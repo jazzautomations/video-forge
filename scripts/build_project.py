@@ -5,6 +5,18 @@ import json
 import shutil
 from component_sources import resolve as resolve_component, copy_graph
 from pathlib import Path
+import sys
+
+def _taste_lint(data):
+    """Run the deterministic taste gate (scripts/lint_taste.py) as part of --check, so the
+    golden path enforces it for free — a weak model can't ship leaked placeholder text or
+    narration that overruns its beat just by skipping the lint step."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import lint_taste
+        return lint_taste.lint(data)
+    except Exception as e:
+        return {'ok': True, 'fails': [], 'warns': [f'taste lint unavailable: {e}'], 'checks': {}}
 
 ROOT = Path(__file__).resolve().parents[1]
 KINDS = {'title', 'character', 'screen', 'three', 'component'}
@@ -86,7 +98,10 @@ def main():
     if errors:
         print(json.dumps({'ok':False,'errors':errors},indent=2));raise SystemExit(1)
     if args.check:
-        print(json.dumps({'ok':True,'scenes':len(data['scenes'])}));return
+        taste=_taste_lint(data)
+        ok=bool(taste.get('ok',True))
+        print(json.dumps({'ok':ok,'scenes':len(data['scenes']),'taste':taste},indent=2,ensure_ascii=False))
+        raise SystemExit(0 if ok else 1)
     if not args.out:ap.error('--out is required unless --check is used')
     if args.out.exists():ap.error('Output exists. To keep an edited project pass --resume to scripts/run.py; to regenerate from scratch choose a NEW --out directory.')
     out=args.out; (out/'src').mkdir(parents=True);(out/'public').mkdir();(out/'out').mkdir()
