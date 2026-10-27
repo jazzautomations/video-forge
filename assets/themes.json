@@ -1,51 +1,75 @@
 {
-  "version": 1,
-  "note": "A theme sets palette, font and default transition for a whole video. compose.py stamps it into the storyboard spec and into themeable catalog scenes, so the same archetype looks different per theme. Fonts are system stacks (no web-font download needed). titleAdvance keeps the title fit math safe for wider fonts.",
+  "version": 2,
+  "note": "A theme sets palette, a DISPLAY+TEXT font pairing and a default transition for a whole video. compose.py stamps it into the storyboard spec (spec.displayFont/textFont/fontFamily/titleAdvance/fonts) and into themeable catalog scenes. Fonts are VENDORED locally as subsetted .woff2 in assets/fonts (SIL OFL 1.1, redistributable) and copied into each generated project's public/fonts — no web-font download, fully reproducible offline. titleAdvance is the per-DISPLAY-font value that keeps EditorialTitle's deterministic fit math safe (measured: freq-weighted glyph advance x the same safety margin Arial's 0.54 used).",
+  "fonts": {
+    "Inter": [{"w": 400, "f": "inter-400.woff2"}, {"w": 600, "f": "inter-600.woff2"}, {"w": 700, "f": "inter-700.woff2"}, {"w": 800, "f": "inter-800.woff2"}],
+    "Space Grotesk": [{"w": 400, "f": "space-grotesk-400.woff2"}, {"w": 500, "f": "space-grotesk-500.woff2"}, {"w": 700, "f": "space-grotesk-700.woff2"}],
+    "JetBrains Mono": [{"w": 400, "f": "jetbrains-mono-400.woff2"}, {"w": 500, "f": "jetbrains-mono-500.woff2"}, {"w": 700, "f": "jetbrains-mono-700.woff2"}],
+    "Noto Serif": [{"w": 400, "f": "noto-serif-400.woff2"}, {"w": 700, "f": "noto-serif-700.woff2"}],
+    "Noto Serif Display": [{"w": 400, "f": "noto-serif-display-400.woff2"}, {"w": 600, "f": "noto-serif-display-600.woff2"}, {"w": 700, "f": "noto-serif-display-700.woff2"}],
+    "Bricolage Grotesque": [{"w": 500, "f": "bricolage-grotesque-500.woff2"}, {"w": 800, "f": "bricolage-grotesque-800.woff2"}]
+  },
+  "stacks": {
+    "Inter": "'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif",
+    "Space Grotesk": "'Space Grotesk','Inter',system-ui,sans-serif",
+    "JetBrains Mono": "'JetBrains Mono',ui-monospace,'Courier New',monospace",
+    "Noto Serif": "'Noto Serif',Georgia,'Times New Roman',serif",
+    "Noto Serif Display": "'Noto Serif Display','Noto Serif',Georgia,serif",
+    "Bricolage Grotesque": "'Bricolage Grotesque','Space Grotesk',system-ui,sans-serif"
+  },
+  "advance": {
+    "Inter": 0.56,
+    "Space Grotesk": 0.55,
+    "JetBrains Mono": 0.66,
+    "Noto Serif": 0.59,
+    "Noto Serif Display": 0.57,
+    "Bricolage Grotesque": 0.54
+  },
   "themes": {
     "midnight-lime": {
       "label": "Midnight lime — the original dark/acid-green editorial look",
       "background": "#101710", "textColor": "#F3F1E9", "accent": "#D7FF64",
-      "fontFamily": "Arial,Helvetica,sans-serif", "titleAdvance": 0.54, "transition": "wipe"
+      "display": "Space Grotesk", "text": "Inter", "transition": "wipe"
     },
     "paper-ink": {
       "label": "Paper & ink — light, warm, serif editorial (print feel)",
       "background": "#F4F1EA", "textColor": "#1A1A1A", "accent": "#E4572E",
-      "fontFamily": "Georgia,'Times New Roman',serif", "titleAdvance": 0.57, "transition": "fade"
+      "display": "Noto Serif Display", "text": "Noto Serif", "transition": "fade"
     },
     "terminal-green": {
       "label": "Terminal — near-black with phosphor green, monospace (hacker/dev)",
       "background": "#07120C", "textColor": "#CFF8DC", "accent": "#27F08A",
-      "fontFamily": "'Courier New',ui-monospace,monospace", "titleAdvance": 0.62, "transition": "iris"
+      "display": "JetBrains Mono", "text": "JetBrains Mono", "transition": "iris"
     },
     "sunset-warm": {
       "label": "Sunset — deep plum with warm orange (friendly, energetic)",
       "background": "#1C0F1A", "textColor": "#FFF2E6", "accent": "#FF8A3D",
-      "fontFamily": "'Trebuchet MS',Verdana,sans-serif", "titleAdvance": 0.54, "transition": "push"
+      "display": "Bricolage Grotesque", "text": "Inter", "transition": "push"
     },
     "cyber-magenta": {
       "label": "Cyber — ink-blue black with hot magenta (bold product/tech)",
       "background": "#0A0A14", "textColor": "#EAE6FF", "accent": "#FF3DAE",
-      "fontFamily": "'Helvetica Neue',Arial,sans-serif", "titleAdvance": 0.54, "transition": "push"
+      "display": "Space Grotesk", "text": "Inter", "transition": "push"
     },
     "mono-noir": {
       "label": "Mono noir — pure black & white, no color (minimal, severe)",
       "background": "#0B0B0B", "textColor": "#FAFAFA", "accent": "#FAFAFA",
-      "fontFamily": "'Helvetica Neue',Arial,sans-serif", "titleAdvance": 0.54, "transition": "none"
+      "display": "Inter", "text": "Inter", "transition": "none"
     },
     "ocean-steel": {
       "label": "Ocean steel — deep teal-navy with cyan (calm, corporate-clean)",
       "background": "#0C1A24", "textColor": "#E8F4FA", "accent": "#37C7E0",
-      "fontFamily": "Verdana,Geneva,sans-serif", "titleAdvance": 0.63, "transition": "fade"
+      "display": "Inter", "text": "Inter", "transition": "fade"
     },
     "royal-gold": {
       "label": "Royal gold — near-black brown with warm gold serif (premium, luxe)",
       "background": "#120E07", "textColor": "#F7EFD9", "accent": "#E8B64C",
-      "fontFamily": "'Palatino Linotype',Palatino,Georgia,serif", "titleAdvance": 0.56, "transition": "iris"
+      "display": "Noto Serif Display", "text": "Noto Serif", "transition": "iris"
     },
     "electric-indigo": {
       "label": "Electric indigo — violet-black with soft purple (modern SaaS)",
       "background": "#0C0912", "textColor": "#EDEAF5", "accent": "#B388FF",
-      "fontFamily": "Arial,Helvetica,sans-serif", "titleAdvance": 0.54, "transition": "push"
+      "display": "Space Grotesk", "text": "Inter", "transition": "push"
     }
   }
 }

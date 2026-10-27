@@ -26,7 +26,11 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 from build_project import validate  # noqa: E402
 
 def _load(p): return json.loads(Path(p).read_text())
-THEMES = _load(ASSETS / 'themes.json')['themes']
+_THEMES_DOC = _load(ASSETS / 'themes.json')
+THEMES = _THEMES_DOC['themes']
+FONTS = _THEMES_DOC['fonts']      # family -> [{w,f}] faces vendored in assets/fonts
+STACKS = _THEMES_DOC['stacks']    # family -> CSS font stack with fallbacks
+ADVANCE = _THEMES_DOC['advance']  # display family -> EditorialTitle fit advance
 SAFE = {i['id']: i for i in _load(ASSETS / 'safe-components.json')['items']}
 ARCH_DIR = ASSETS / 'archetypes'
 ARCHETYPES = sorted(p.stem for p in ARCH_DIR.glob('*.json'))
@@ -50,8 +54,18 @@ def _apply_theme(spec, theme, keep_transition=False):
     spec['background'] = theme['background']
     spec['textColor'] = theme['textColor']
     spec['accent'] = theme['accent']
-    spec['fontFamily'] = theme['fontFamily']
-    spec['titleAdvance'] = theme['titleAdvance']
+    # A theme pairs a DISPLAY font (headlines) with a TEXT font (body/components).
+    disp, txt = theme['display'], theme['text']
+    spec['displayFont'] = STACKS[disp]
+    spec['textFont'] = STACKS[txt]
+    spec['fontFamily'] = STACKS[txt]      # components + body inherit the text family
+    spec['titleAdvance'] = ADVANCE[disp]  # fit math uses the DISPLAY font's advance
+    # The exact @font-face set this video needs (display+text families, de-duped), so
+    # build_project copies just these .woff2 into public/fonts and registers them.
+    faces = []
+    for fam in dict.fromkeys([disp, txt]):
+        faces += [{'family': fam, 'weight': face['w'], 'file': face['f']} for face in FONTS[fam]]
+    spec['fonts'] = faces
     if not keep_transition:
         spec['transition'] = theme['transition']
 

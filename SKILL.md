@@ -58,6 +58,13 @@ Pick deliberately:
   serif), `terminal-green` (dev/hacker), `royal-gold` (luxe), `ocean-steel` (corporate),
   `cyber-magenta`/`electric-indigo` (bold tech), `mono-noir` (minimal). 5 archetypes × 9
   themes = 45 distinct looks before you touch a word; `--seed` multiplies that.
+- **Real fonts, vendored & local:** each theme pairs a DISPLAY font (headlines) with a
+  TEXT font (body) — e.g. Space Grotesk/Inter, Noto Serif Display/Noto Serif, JetBrains
+  Mono, Bricolage Grotesque. They are SIL OFL `.woff2` in `assets/fonts` (subsetted, no
+  download), copied into each project's `public/fonts` and loaded via `delayRender` so the
+  render never falls back to Arial/Georgia. compose.py stamps `displayFont`/`textFont` and
+  the per-font `titleAdvance` that keeps the title-fit math safe. This is the single biggest
+  lift over system fonts — don't bypass it by hand-setting a bare `fontFamily`.
 - Never ship the `midnight-lime` / WOHACKERS defaults unless the brand truly is lime-on-dark.
   If asked for options, compose 2–3 with different theme/`--seed` and compare frames.
 
