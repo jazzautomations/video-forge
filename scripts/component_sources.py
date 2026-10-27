@@ -6,21 +6,30 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 def resolve(identifier):
-    if not isinstance(identifier,str) or not re.fullmatch(r'(onda|rendercomp)/[a-z0-9-]+',identifier):
-        raise ValueError('component: choose an actual onda/slug or rendercomp/slug from catalog.py')
+    # onda: registry/components/<slug>/<Comp>.tsx + schema.ts (Zod-parsed props).
+    # rendercomp: src/components/<slug>/<Comp>.tsx with `export const default<Comp>Props`.
+    # curvable: src/components/<slug>.tsx (single file) with `export const <Comp>Defaults`.
+    if not isinstance(identifier,str) or not re.fullmatch(r'(onda|rendercomp|curvable)/[a-z0-9-]+',identifier):
+        raise ValueError('component: choose an actual onda/, rendercomp/ or curvable/ slug from catalog.py')
     family,slug=identifier.split('/')
     base=ROOT/'library/vendor'/family
-    folder=base/('registry/components' if family=='onda' else 'src/components')/slug
-    files=sorted(folder.glob('*.tsx'))
-    if len(files)!=1:raise ValueError(f'Unknown or ambiguous component: {identifier}')
-    source=files[0];text=source.read_text()
+    if family=='curvable':
+        source=base/'src/components'/f'{slug}.tsx'
+        if not source.is_file():raise ValueError(f'Unknown component: {identifier}')
+    else:
+        folder=base/('registry/components' if family=='onda' else 'src/components')/slug
+        files=sorted(folder.glob('*.tsx'))
+        if len(files)!=1:raise ValueError(f'Unknown or ambiguous component: {identifier}')
+        source=files[0]
+    text=source.read_text()
     name=re.search(r'export const (\w+):\s*(?:React\.)?FC',text)
     if not name:raise ValueError(f'No public React component in {identifier}')
     if family=='onda':
-        schema=re.search(r'export const (\w+Schema)\s*=',(folder/'schema.ts').read_text())
+        schema=re.search(r'export const (\w+Schema)\s*=',(source.parent/'schema.ts').read_text())
         if not schema:raise ValueError(f'Missing schema for {identifier}')
         return base,source,name[1],schema[1],True
-    defaults=re.search(r'export const (default\w+Props)\b',text)
+    pat=r'export const (default\w+Props)\b' if family=='rendercomp' else r'export const (\w+Defaults)\b'
+    defaults=re.search(pat,text)
     if not defaults:raise ValueError(f'Missing default props for {identifier}')
     return base,source,name[1],defaults[1],False
 

@@ -35,6 +35,21 @@
     "accent": {
       "type": "string"
     },
+    "fontFamily": {
+      "type": "string",
+      "description": "Base font stack for titles, 3D overlays and catalog components. Use a system stack (e.g. 'Arial,sans-serif', 'Georgia,serif', \"'Courier New',monospace\")."
+    },
+    "titleAdvance": {
+      "type": "number",
+      "description": "Upper-bound glyph advance (fraction of font size) for the title fit math. 0.54 for Arial/Helvetica; raise for wider fonts (Georgia ~0.56, Verdana ~0.63) so long titles never overflow.",
+      "minimum": 0.4,
+      "maximum": 0.9
+    },
+    "transition": {
+      "type": "string",
+      "description": "Default seam between scenes. Per-scene 'transition' overrides it.",
+      "enum": ["wipe", "push", "fade", "iris", "none"]
+    },
     "scenes": {
       "type": "array",
       "minItems": 1,
@@ -129,7 +144,17 @@
           },
           "component": {
             "type": "string",
-            "pattern": "^(onda|rendercomp)/[a-z0-9-]+$"
+            "pattern": "^(onda|rendercomp|curvable)/[a-z0-9-]+$"
+          },
+          "transition": {
+            "type": "string",
+            "enum": ["wipe", "push", "fade", "iris", "none"]
+          },
+          "titleSize": {
+            "type": "number"
+          },
+          "maxTitleSize": {
+            "type": "number"
           }
         },
         "allOf": [

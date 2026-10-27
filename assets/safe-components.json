@@ -1,0 +1,1315 @@
+{
+  "version": 2,
+  "generated_at": "2026-10-27",
+  "note": "Components verified to compile through build_project.py with only react/remotion/zod + @remotion/* deps. onda + built-in scenes auto-adopt the theme palette; rendercomp entries with a \"theme\" map get themed by compose.py; curvable scenes bring their OWN palette (theme:\"curvable\") \u2014 use them deliberately, they are not auto-themed. Every component renders from its own defaults; props are optional overrides.",
+  "count": 129,
+  "by_family": {
+    "rendercomp": 50,
+    "curvable": 10,
+    "onda": 69
+  },
+  "items": [
+    {
+      "id": "rendercomp/bar-chart-anim",
+      "family": "rendercomp",
+      "tags": [
+        "bar",
+        "chart",
+        "anim"
+      ],
+      "use": "Animated bar chart. bars:[{label,value,color}] + title + subtitle.",
+      "theme": {
+        "background": "bg",
+        "titleColor": "text",
+        "accentColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/bokeh-circles",
+      "family": "rendercomp",
+      "tags": [
+        "bokeh",
+        "circles"
+      ],
+      "use": "Soft bokeh background.",
+      "theme": {
+        "backgroundColor": "bg",
+        "accentColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/bounce-in-headline",
+      "family": "rendercomp",
+      "tags": [
+        "bounce",
+        "in",
+        "headline"
+      ]
+    },
+    {
+      "id": "rendercomp/brush-stroke-reveal",
+      "family": "rendercomp",
+      "tags": [
+        "brush",
+        "stroke",
+        "reveal"
+      ]
+    },
+    {
+      "id": "rendercomp/camera-shake",
+      "family": "rendercomp",
+      "tags": [
+        "camera",
+        "shake"
+      ]
+    },
+    {
+      "id": "rendercomp/card-flip-transition",
+      "family": "rendercomp",
+      "tags": [
+        "card",
+        "flip",
+        "transition"
+      ]
+    },
+    {
+      "id": "rendercomp/chapter-title",
+      "family": "rendercomp",
+      "tags": [
+        "chapter",
+        "title"
+      ],
+      "use": "Chapter divider. chapterLabel + title + subtitle.",
+      "theme": {
+        "background": "bg",
+        "chapterColor": "accent",
+        "titleColor": "text"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/character-jumping",
+      "family": "rendercomp",
+      "tags": [
+        "character",
+        "jumping"
+      ]
+    },
+    {
+      "id": "rendercomp/community-chat",
+      "family": "rendercomp",
+      "tags": [
+        "community",
+        "chat"
+      ]
+    },
+    {
+      "id": "rendercomp/end-card",
+      "family": "rendercomp",
+      "tags": [
+        "end",
+        "card"
+      ],
+      "use": "Closing CTA card. title + subtitle + ctaText.",
+      "theme": {
+        "background": "bg",
+        "titleColor": "text",
+        "accentColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/eye-reveal",
+      "family": "rendercomp",
+      "tags": [
+        "eye",
+        "reveal"
+      ]
+    },
+    {
+      "id": "rendercomp/fireworks-burst",
+      "family": "rendercomp",
+      "tags": [
+        "fireworks",
+        "burst"
+      ]
+    },
+    {
+      "id": "rendercomp/flip-page-transition",
+      "family": "rendercomp",
+      "tags": [
+        "flip",
+        "page",
+        "transition"
+      ]
+    },
+    {
+      "id": "rendercomp/four-tone-mono-titler",
+      "family": "rendercomp",
+      "tags": [
+        "four",
+        "tone",
+        "mono",
+        "titler"
+      ]
+    },
+    {
+      "id": "rendercomp/glitch-text",
+      "family": "rendercomp",
+      "tags": [
+        "glitch",
+        "text"
+      ],
+      "use": "One word with glitch. text (short caps).",
+      "theme": {
+        "backgroundColor": "bg",
+        "glitchColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/gradient-text-sweep",
+      "family": "rendercomp",
+      "tags": [
+        "gradient",
+        "text",
+        "sweep"
+      ],
+      "use": "Headline with animated gradient sweep. headline + subline.",
+      "theme": "auto",
+      "featured": true
+    },
+    {
+      "id": "rendercomp/ink-spread-transition",
+      "family": "rendercomp",
+      "tags": [
+        "ink",
+        "spread",
+        "transition"
+      ]
+    },
+    {
+      "id": "rendercomp/kinetic-word-stack",
+      "family": "rendercomp",
+      "tags": [
+        "kinetic",
+        "word",
+        "stack"
+      ],
+      "use": "Full-screen kinetic word stack. Give words[] (3-5 SHORT caps words).",
+      "theme": "auto",
+      "featured": true
+    },
+    {
+      "id": "rendercomp/kpi-counter",
+      "family": "rendercomp",
+      "tags": [
+        "kpi",
+        "counter"
+      ],
+      "use": "Big KPI count-up with label.",
+      "theme": {
+        "background": "bg",
+        "textColor": "text",
+        "accentColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/line-chart-anim",
+      "family": "rendercomp",
+      "tags": [
+        "line",
+        "chart",
+        "anim"
+      ],
+      "use": "Animated line chart. See defaults for shape.",
+      "theme": {
+        "background": "bg",
+        "titleColor": "text",
+        "accentColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/logo-blur-reveal",
+      "family": "rendercomp",
+      "tags": [
+        "logo",
+        "blur",
+        "reveal"
+      ]
+    },
+    {
+      "id": "rendercomp/logo-bounce-drop",
+      "family": "rendercomp",
+      "tags": [
+        "logo",
+        "bounce",
+        "drop"
+      ]
+    },
+    {
+      "id": "rendercomp/logo-mask-wipe",
+      "family": "rendercomp",
+      "tags": [
+        "logo",
+        "mask",
+        "wipe"
+      ]
+    },
+    {
+      "id": "rendercomp/logo-split-reveal",
+      "family": "rendercomp",
+      "tags": [
+        "logo",
+        "split",
+        "reveal"
+      ],
+      "use": "Wordmark split reveal.",
+      "theme": "auto",
+      "featured": true
+    },
+    {
+      "id": "rendercomp/logo-stroke-draw",
+      "family": "rendercomp",
+      "tags": [
+        "logo",
+        "stroke",
+        "draw"
+      ]
+    },
+    {
+      "id": "rendercomp/loop-grid-wave",
+      "family": "rendercomp",
+      "tags": [
+        "loop",
+        "grid",
+        "wave"
+      ]
+    },
+    {
+      "id": "rendercomp/lower-third-glass-card",
+      "family": "rendercomp",
+      "tags": [
+        "lower",
+        "third",
+        "glass",
+        "card"
+      ]
+    },
+    {
+      "id": "rendercomp/neon-sign",
+      "family": "rendercomp",
+      "tags": [
+        "neon",
+        "sign"
+      ],
+      "use": "Neon sign vibe. signText + subText.",
+      "theme": {
+        "backgroundColor": "bg",
+        "textColor": "text"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/parallax-pan",
+      "family": "rendercomp",
+      "tags": [
+        "parallax",
+        "pan"
+      ]
+    },
+    {
+      "id": "rendercomp/particle-snow",
+      "family": "rendercomp",
+      "tags": [
+        "particle",
+        "snow"
+      ]
+    },
+    {
+      "id": "rendercomp/pencil-draw",
+      "family": "rendercomp",
+      "tags": [
+        "pencil",
+        "draw"
+      ]
+    },
+    {
+      "id": "rendercomp/pixel-candlestick-ohlc",
+      "family": "rendercomp",
+      "tags": [
+        "pixel",
+        "candlestick",
+        "ohlc"
+      ]
+    },
+    {
+      "id": "rendercomp/pixel-mosaic-transition",
+      "family": "rendercomp",
+      "tags": [
+        "pixel",
+        "mosaic",
+        "transition"
+      ]
+    },
+    {
+      "id": "rendercomp/pixel-typewriter-quote",
+      "family": "rendercomp",
+      "tags": [
+        "pixel",
+        "typewriter",
+        "quote"
+      ]
+    },
+    {
+      "id": "rendercomp/pixel-waterfall-cycle",
+      "family": "rendercomp",
+      "tags": [
+        "pixel",
+        "waterfall",
+        "cycle"
+      ]
+    },
+    {
+      "id": "rendercomp/pourover-drip-fill-gauge",
+      "family": "rendercomp",
+      "tags": [
+        "pourover",
+        "drip",
+        "fill",
+        "gauge"
+      ]
+    },
+    {
+      "id": "rendercomp/racing-chart",
+      "family": "rendercomp",
+      "tags": [
+        "racing",
+        "chart"
+      ],
+      "use": "Racing/growth chart. data:[{label,values[],color}] + title.",
+      "theme": {
+        "background": "bg",
+        "titleColor": "text"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/scramble-text",
+      "family": "rendercomp",
+      "tags": [
+        "scramble",
+        "text"
+      ],
+      "use": "Decrypt/scramble reveal. text + label.",
+      "theme": {
+        "background": "bg",
+        "textColor": "accent",
+        "labelColor": "text"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/shatter-reveal",
+      "family": "rendercomp",
+      "tags": [
+        "shatter",
+        "reveal"
+      ]
+    },
+    {
+      "id": "rendercomp/slide-wipe",
+      "family": "rendercomp",
+      "tags": [
+        "slide",
+        "wipe"
+      ]
+    },
+    {
+      "id": "rendercomp/social-reel",
+      "family": "rendercomp",
+      "tags": [
+        "social",
+        "reel"
+      ],
+      "use": "Vertical social reel layout. brandName/handle/headline/ctaText.",
+      "theme": {
+        "accentColor": "accent",
+        "bgFrom": "bg",
+        "bgVia": "bg",
+        "bgTo": "bg"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/split-screen",
+      "family": "rendercomp",
+      "tags": [
+        "split",
+        "screen"
+      ],
+      "use": "Two-panel split layout.",
+      "theme": "auto",
+      "featured": true
+    },
+    {
+      "id": "rendercomp/starfield",
+      "family": "rendercomp",
+      "tags": [
+        "starfield"
+      ],
+      "use": "Warp-speed starfield background with label.",
+      "theme": {
+        "baseColor": "bg",
+        "starColor": "text",
+        "labelColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/text-mask-reveal",
+      "family": "rendercomp",
+      "tags": [
+        "text",
+        "mask",
+        "reveal"
+      ]
+    },
+    {
+      "id": "rendercomp/thinking-bubble",
+      "family": "rendercomp",
+      "tags": [
+        "thinking",
+        "bubble"
+      ]
+    },
+    {
+      "id": "rendercomp/transition-circle-wipe",
+      "family": "rendercomp",
+      "tags": [
+        "transition",
+        "circle",
+        "wipe"
+      ]
+    },
+    {
+      "id": "rendercomp/typewriter",
+      "family": "rendercomp",
+      "tags": [
+        "typewriter"
+      ],
+      "use": "Typewriter line of text.",
+      "theme": {
+        "backgroundColor": "bg",
+        "textColor": "text"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/wave-hello",
+      "family": "rendercomp",
+      "tags": [
+        "wave",
+        "hello"
+      ]
+    },
+    {
+      "id": "rendercomp/wave-text",
+      "family": "rendercomp",
+      "tags": [
+        "wave",
+        "text"
+      ],
+      "use": "Wavy animated headline.",
+      "theme": {
+        "backgroundColor": "bg",
+        "textColor": "text",
+        "accentColor": "accent"
+      },
+      "featured": true
+    },
+    {
+      "id": "rendercomp/whip-pan",
+      "family": "rendercomp",
+      "tags": [
+        "whip",
+        "pan"
+      ]
+    },
+    {
+      "id": "curvable/bulb-bg",
+      "family": "curvable",
+      "tags": [
+        "bulb",
+        "bg"
+      ],
+      "use": "Glowing bulb/orb background (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/cascading-text",
+      "family": "curvable",
+      "tags": [
+        "cascading",
+        "text"
+      ],
+      "use": "Cascading multi-line text reveal (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/curvable-types",
+      "family": "curvable",
+      "tags": [
+        "curvable",
+        "types"
+      ],
+      "use": "Type-specimen / big type showcase (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/ellipse-bloom",
+      "family": "curvable",
+      "tags": [
+        "ellipse",
+        "bloom"
+      ],
+      "use": "Blooming ellipse background (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/paste-pill",
+      "family": "curvable",
+      "tags": [
+        "paste",
+        "pill"
+      ],
+      "use": "Paste/pill UI accent element (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/slide-reveal",
+      "family": "curvable",
+      "tags": [
+        "slide",
+        "reveal"
+      ],
+      "use": "Slide-in reveal with accent rule (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/text-hover",
+      "family": "curvable",
+      "tags": [
+        "text",
+        "hover"
+      ],
+      "use": "Multi-color gradient display text (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/text-swap",
+      "family": "curvable",
+      "tags": [
+        "text",
+        "swap"
+      ],
+      "use": "Launch-style animated text swap (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/two-drops-bg",
+      "family": "curvable",
+      "tags": [
+        "two",
+        "drops",
+        "bg"
+      ],
+      "use": "Liquid two-drops gradient background (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "curvable/typewriter",
+      "family": "curvable",
+      "tags": [
+        "typewriter"
+      ],
+      "use": "Curvable typewriter line (own palette).",
+      "theme": "curvable",
+      "featured": true
+    },
+    {
+      "id": "onda/audio-clip",
+      "family": "onda",
+      "tags": [
+        "audio",
+        "clip"
+      ]
+    },
+    {
+      "id": "onda/audio-visualizer",
+      "family": "onda",
+      "tags": [
+        "audio",
+        "visualizer"
+      ],
+      "remotionDeps": [
+        "@remotion/media-utils"
+      ],
+      "use": "Audio-reactive bars (needs audio).",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/bar-chart",
+      "family": "onda",
+      "tags": [
+        "bar",
+        "chart"
+      ],
+      "use": "Bar chart (onda).",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/bento-grid",
+      "family": "onda",
+      "tags": [
+        "bento",
+        "grid"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ],
+      "use": "Bento grid of cards.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/blur-reveal",
+      "family": "onda",
+      "tags": [
+        "blur",
+        "reveal"
+      ]
+    },
+    {
+      "id": "onda/bounding-box",
+      "family": "onda",
+      "tags": [
+        "bounding",
+        "box"
+      ],
+      "remotionDeps": [
+        "@remotion/paths"
+      ]
+    },
+    {
+      "id": "onda/browser-frame",
+      "family": "onda",
+      "tags": [
+        "browser",
+        "frame"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ]
+    },
+    {
+      "id": "onda/button",
+      "family": "onda",
+      "tags": [
+        "button"
+      ]
+    },
+    {
+      "id": "onda/callout",
+      "family": "onda",
+      "tags": [
+        "callout"
+      ],
+      "remotionDeps": [
+        "@remotion/paths"
+      ],
+      "use": "Callout with pointer.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/camera-shake",
+      "family": "onda",
+      "tags": [
+        "camera",
+        "shake"
+      ]
+    },
+    {
+      "id": "onda/captions",
+      "family": "onda",
+      "tags": [
+        "captions"
+      ]
+    },
+    {
+      "id": "onda/chapter-card",
+      "family": "onda",
+      "tags": [
+        "chapter",
+        "card"
+      ],
+      "use": "Numbered chapter card. props: chapter, number.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/code-diff",
+      "family": "onda",
+      "tags": [
+        "code",
+        "diff"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ]
+    },
+    {
+      "id": "onda/confetti",
+      "family": "onda",
+      "tags": [
+        "confetti"
+      ],
+      "use": "Confetti burst overlay.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/count-up",
+      "family": "onda",
+      "tags": [
+        "count",
+        "up"
+      ],
+      "use": "Number counter. props: from, to, prefix, suffix, decimals.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/cursor",
+      "family": "onda",
+      "tags": [
+        "cursor"
+      ]
+    },
+    {
+      "id": "onda/device-frame",
+      "family": "onda",
+      "tags": [
+        "device",
+        "frame"
+      ],
+      "use": "Phone/device frame (needs src image in public/).",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/draw-on",
+      "family": "onda",
+      "tags": [
+        "draw",
+        "on"
+      ],
+      "remotionDeps": [
+        "@remotion/paths"
+      ]
+    },
+    {
+      "id": "onda/dynamic-grid",
+      "family": "onda",
+      "tags": [
+        "dynamic",
+        "grid"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ]
+    },
+    {
+      "id": "onda/end-card",
+      "family": "onda",
+      "tags": [
+        "end",
+        "card"
+      ]
+    },
+    {
+      "id": "onda/fade-in",
+      "family": "onda",
+      "tags": [
+        "fade",
+        "in"
+      ]
+    },
+    {
+      "id": "onda/fade-out",
+      "family": "onda",
+      "tags": [
+        "fade",
+        "out"
+      ]
+    },
+    {
+      "id": "onda/gradient-shift",
+      "family": "onda",
+      "tags": [
+        "gradient",
+        "shift"
+      ]
+    },
+    {
+      "id": "onda/grain-overlay",
+      "family": "onda",
+      "tags": [
+        "grain",
+        "overlay"
+      ]
+    },
+    {
+      "id": "onda/highlight",
+      "family": "onda",
+      "tags": [
+        "highlight"
+      ],
+      "use": "Highlight emphasis on text.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/icon-pop",
+      "family": "onda",
+      "tags": [
+        "icon",
+        "pop"
+      ]
+    },
+    {
+      "id": "onda/image-reveal",
+      "family": "onda",
+      "tags": [
+        "image",
+        "reveal"
+      ]
+    },
+    {
+      "id": "onda/input-field",
+      "family": "onda",
+      "tags": [
+        "input",
+        "field"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ]
+    },
+    {
+      "id": "onda/kanban-board",
+      "family": "onda",
+      "tags": [
+        "kanban",
+        "board"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ]
+    },
+    {
+      "id": "onda/ken-burns",
+      "family": "onda",
+      "tags": [
+        "ken",
+        "burns"
+      ]
+    },
+    {
+      "id": "onda/line-chart",
+      "family": "onda",
+      "tags": [
+        "line",
+        "chart"
+      ],
+      "use": "Line chart (onda).",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/logo-sting",
+      "family": "onda",
+      "tags": [
+        "logo",
+        "sting"
+      ],
+      "remotionDeps": [
+        "@remotion/paths"
+      ]
+    },
+    {
+      "id": "onda/lower-third",
+      "family": "onda",
+      "tags": [
+        "lower",
+        "third"
+      ],
+      "use": "Name/role lower third. props: name, role, placement.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/marquee",
+      "family": "onda",
+      "tags": [
+        "marquee"
+      ],
+      "use": "Scrolling tag strip. props: items:[].",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/mask-reveal",
+      "family": "onda",
+      "tags": [
+        "mask",
+        "reveal"
+      ]
+    },
+    {
+      "id": "onda/matrix-decode",
+      "family": "onda",
+      "tags": [
+        "matrix",
+        "decode"
+      ],
+      "use": "Matrix decode text effect.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/mesh-gradient",
+      "family": "onda",
+      "tags": [
+        "mesh",
+        "gradient"
+      ],
+      "use": "Animated mesh gradient background. props: background, speed, seed.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/node-graph",
+      "family": "onda",
+      "tags": [
+        "node",
+        "graph"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ],
+      "use": "Node/edge graph.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/parallax",
+      "family": "onda",
+      "tags": [
+        "parallax"
+      ]
+    },
+    {
+      "id": "onda/pie-reveal",
+      "family": "onda",
+      "tags": [
+        "pie",
+        "reveal"
+      ]
+    },
+    {
+      "id": "onda/pricing-card",
+      "family": "onda",
+      "tags": [
+        "pricing",
+        "card"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ],
+      "use": "Pricing card.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/progress-bar",
+      "family": "onda",
+      "tags": [
+        "progress",
+        "bar"
+      ]
+    },
+    {
+      "id": "onda/progress-steps",
+      "family": "onda",
+      "tags": [
+        "progress",
+        "steps"
+      ],
+      "use": "Stepper / progress steps.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/pulsing-indicator",
+      "family": "onda",
+      "tags": [
+        "pulsing",
+        "indicator"
+      ]
+    },
+    {
+      "id": "onda/quote-card",
+      "family": "onda",
+      "tags": [
+        "quote",
+        "card"
+      ],
+      "use": "Pull quote. props: quote, author, role.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/rgb-glitch-text",
+      "family": "onda",
+      "tags": [
+        "rgb",
+        "glitch",
+        "text"
+      ]
+    },
+    {
+      "id": "onda/rotate-in",
+      "family": "onda",
+      "tags": [
+        "rotate",
+        "in"
+      ]
+    },
+    {
+      "id": "onda/scale-in",
+      "family": "onda",
+      "tags": [
+        "scale",
+        "in"
+      ]
+    },
+    {
+      "id": "onda/shimmer-sweep",
+      "family": "onda",
+      "tags": [
+        "shimmer",
+        "sweep"
+      ]
+    },
+    {
+      "id": "onda/skeleton-card",
+      "family": "onda",
+      "tags": [
+        "skeleton",
+        "card"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ]
+    },
+    {
+      "id": "onda/slide-in",
+      "family": "onda",
+      "tags": [
+        "slide",
+        "in"
+      ]
+    },
+    {
+      "id": "onda/slide-out",
+      "family": "onda",
+      "tags": [
+        "slide",
+        "out"
+      ]
+    },
+    {
+      "id": "onda/slot-machine-roll",
+      "family": "onda",
+      "tags": [
+        "slot",
+        "machine",
+        "roll"
+      ]
+    },
+    {
+      "id": "onda/split-screen",
+      "family": "onda",
+      "tags": [
+        "split",
+        "screen"
+      ]
+    },
+    {
+      "id": "onda/spotlight",
+      "family": "onda",
+      "tags": [
+        "spotlight"
+      ]
+    },
+    {
+      "id": "onda/spotlight-card",
+      "family": "onda",
+      "tags": [
+        "spotlight",
+        "card"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ]
+    },
+    {
+      "id": "onda/stagger-group",
+      "family": "onda",
+      "tags": [
+        "stagger",
+        "group"
+      ]
+    },
+    {
+      "id": "onda/stat-card",
+      "family": "onda",
+      "tags": [
+        "stat",
+        "card"
+      ],
+      "use": "Big stat count-up. props: value (number), label, prefix, suffix.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/terminal",
+      "family": "onda",
+      "tags": [
+        "terminal"
+      ],
+      "remotionDeps": [
+        "@remotion/motion-blur"
+      ],
+      "use": "Terminal window with typed lines.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/text-fade-replace",
+      "family": "onda",
+      "tags": [
+        "text",
+        "fade",
+        "replace"
+      ]
+    },
+    {
+      "id": "onda/timeline",
+      "family": "onda",
+      "tags": [
+        "timeline"
+      ],
+      "remotionDeps": [
+        "@remotion/paths"
+      ],
+      "use": "Horizontal timeline.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/title-card",
+      "family": "onda",
+      "tags": [
+        "title",
+        "card"
+      ],
+      "use": "Clean title card. props: title, subtitle.",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/tracking-in",
+      "family": "onda",
+      "tags": [
+        "tracking",
+        "in"
+      ]
+    },
+    {
+      "id": "onda/typewriter",
+      "family": "onda",
+      "tags": [
+        "typewriter"
+      ]
+    },
+    {
+      "id": "onda/underline",
+      "family": "onda",
+      "tags": [
+        "underline"
+      ]
+    },
+    {
+      "id": "onda/video-clip",
+      "family": "onda",
+      "tags": [
+        "video",
+        "clip"
+      ]
+    },
+    {
+      "id": "onda/vignette",
+      "family": "onda",
+      "tags": [
+        "vignette"
+      ]
+    },
+    {
+      "id": "onda/word-rotate",
+      "family": "onda",
+      "tags": [
+        "word",
+        "rotate"
+      ],
+      "use": "Rotating phrases in place. props: phrases:[].",
+      "theme": "onda",
+      "featured": true
+    },
+    {
+      "id": "onda/word-stagger",
+      "family": "onda",
+      "tags": [
+        "word",
+        "stagger"
+      ]
+    }
+  ]
+}

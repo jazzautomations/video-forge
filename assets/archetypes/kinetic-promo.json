@@ -1,0 +1,31 @@
+{
+  "_meta": {"name": "kinetic-promo", "beats": 7, "feel": "fast, punchy, type-driven launch promo", "defaultTheme": "cyber-magenta"},
+  "width": 1920, "height": 1080, "fps": 30,
+  "brand": "YOUR BRAND",
+  "background": "#0A0A14", "textColor": "#EAE6FF", "accent": "#FF3DAE",
+  "fontFamily": "'Helvetica Neue',Arial,sans-serif", "titleAdvance": 0.54, "transition": "push",
+  "voice": "pf_dora", "voiceLanguage": "pt-br", "music": true,
+  "durationSeconds": 22,
+  "scenes": [
+    {"kind": "component", "component": "rendercomp/kinetic-word-stack", "seconds": 3,
+     "props": {"words": ["RÁPIDO", "BONITO", "SEU", "AGORA"]},
+     "narration": "Rápido. Bonito. Seu."},
+    {"kind": "title", "seconds": 4, "eyebrow": "APRESENTANDO",
+     "title": "O título do seu produto.", "subtitle": "A promessa em uma linha.",
+     "narration": "Esse é o seu produto, e a promessa dele."},
+    {"kind": "component", "component": "rendercomp/gradient-text-sweep", "seconds": 3,
+     "props": {"headline": "FEITO PRA VOCÊ", "subline": "SUA MARCA"},
+     "narration": "Feito pra você."},
+    {"kind": "component", "component": "rendercomp/glitch-text", "seconds": 2.5,
+     "props": {"text": "POTENTE"},
+     "narration": "Potente."},
+    {"kind": "three", "seconds": 3.5, "title": "Forma. Luz. Movimento.",
+     "narration": "Forma, luz e movimento, tudo em código."},
+    {"kind": "title", "seconds": 4, "eyebrow": "DISPONÍVEL JÁ", "closing": true,
+     "title": "Comece hoje.", "subtitle": "Seu endereço ou chamada aqui.",
+     "narration": "Comece hoje."},
+    {"kind": "component", "component": "rendercomp/end-card", "seconds": 2,
+     "props": {"title": "Obrigado", "subtitle": "SAIBA MAIS", "ctaText": "seusite.com.br"},
+     "narration": "Saiba mais no nosso site."}
+  ]
+}

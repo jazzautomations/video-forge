@@ -1,0 +1,31 @@
+{
+  "_meta": {"name": "data-story", "beats": 7, "feel": "numbers-first, charts carry the narrative", "defaultTheme": "royal-gold"},
+  "width": 1920, "height": 1080, "fps": 30,
+  "brand": "YOUR BRAND",
+  "background": "#120E07", "textColor": "#F7EFD9", "accent": "#E8B64C",
+  "fontFamily": "'Palatino Linotype',Palatino,Georgia,serif", "titleAdvance": 0.56, "transition": "iris",
+  "voice": "pf_dora", "voiceLanguage": "pt-br", "music": true,
+  "durationSeconds": 24,
+  "scenes": [
+    {"kind": "component", "component": "rendercomp/chapter-title", "seconds": 3,
+     "props": {"chapterLabel": "RELATÓRIO", "title": "O ano em números", "subtitle": "o que os dados mostram"},
+     "narration": "Vamos ao ano em números."},
+    {"kind": "title", "seconds": 4, "eyebrow": "PANORAMA",
+     "title": "A tendência de 2026.", "subtitle": "Three charts, one story.",
+     "narration": "A tendência deste ano, em três gráficos."},
+    {"kind": "component", "component": "rendercomp/bar-chart-anim", "seconds": 4,
+     "props": {"title": "Receita por trimestre", "subtitle": "ano a ano +28%"},
+     "narration": "A receita cresceu a cada trimestre."},
+    {"kind": "component", "component": "rendercomp/racing-chart", "seconds": 4,
+     "props": {"title": "Disputa de mercado"},
+     "narration": "E a disputa de mercado virou."},
+    {"kind": "component", "component": "rendercomp/kpi-counter", "seconds": 3,
+     "narration": "O indicador principal bateu recorde."},
+    {"kind": "component", "component": "onda/count-up", "seconds": 2,
+     "props": {"from": 0, "to": 98, "suffix": "%"},
+     "narration": "Noventa e oito por cento."},
+    {"kind": "title", "seconds": 4, "eyebrow": "CONCLUSÃO", "closing": true,
+     "title": "O que vem agora.", "subtitle": "Sua recomendação aqui.",
+     "narration": "E é isso que vem agora."}
+  ]
+}
