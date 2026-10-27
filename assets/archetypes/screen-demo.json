@@ -1,32 +1,102 @@
 {
-  "_meta": {"name": "screen-demo", "beats": 6, "feel": "product walkthrough around a screen recording", "defaultTheme": "electric-indigo", "needs": "copy a screen recording to public/screen.mp4 (or change src); set sourceWidth/Height to its real pixels"},
-  "width": 1920, "height": 1080, "fps": 30,
+  "_meta": {
+    "name": "screen-demo",
+    "beats": 6,
+    "feel": "product walkthrough around a screen recording",
+    "defaultTheme": "electric-indigo",
+    "needs": "copy a screen recording to public/screen.mp4 (or change src); set sourceWidth/Height to its real pixels"
+  },
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
   "brand": "YOUR BRAND",
-  "background": "#0C0912", "textColor": "#EDEAF5", "accent": "#B388FF",
-  "fontFamily": "Arial,Helvetica,sans-serif", "titleAdvance": 0.54, "transition": "push",
-  "voice": "pf_dora", "voiceLanguage": "pt-br", "music": true,
+  "background": "#0C0912",
+  "textColor": "#EDEAF5",
+  "accent": "#B388FF",
+  "fontFamily": "Arial,Helvetica,sans-serif",
+  "titleAdvance": 0.54,
+  "transition": "push",
+  "voice": "pf_dora",
+  "voiceLanguage": "pt-br",
+  "music": true,
   "durationSeconds": 24,
   "scenes": [
-    {"kind": "title", "seconds": 4, "eyebrow": "DEMONSTRAÇÃO",
-     "title": "Veja funcionando.", "subtitle": "Da abertura ao resultado.",
-     "narration": "Deixa eu te mostrar funcionando."},
-    {"kind": "screen", "seconds": 6, "src": "screen.mp4", "sourceWidth": 1920, "sourceHeight": 1080,
-     "keys": [
-       {"frame": 0, "cx": 960, "cy": 540, "zoom": 1},
-       {"frame": 30, "cx": 960, "cy": 540, "zoom": 1},
-       {"frame": 80, "cx": 1280, "cy": 690, "zoom": 1.5},
-       {"frame": 140, "cx": 1280, "cy": 690, "zoom": 1.5},
-       {"frame": 179, "cx": 960, "cy": 540, "zoom": 1}
-     ],
-     "narration": "Abra a tela e vá direto ao que importa."},
-    {"kind": "component", "component": "onda/callout", "seconds": 3,
-     "narration": "Aqui está o detalhe que faz a diferença."},
-    {"kind": "component", "component": "onda/progress-steps", "seconds": 4,
-     "narration": "São três passos, nada além disso."},
-    {"kind": "component", "component": "onda/highlight", "seconds": 3,
-     "narration": "E pronto, o resultado aparece."},
-    {"kind": "title", "seconds": 4, "eyebrow": "EXPERIMENTE", "closing": true,
-     "title": "Tente você mesmo.", "subtitle": "Link ou instrução aqui.",
-     "narration": "Agora tente você mesmo."}
+    {
+      "kind": "title",
+      "seconds": 4,
+      "eyebrow": "DEMONSTRAÇÃO",
+      "title": "Veja funcionando.",
+      "subtitle": "Da abertura ao resultado.",
+      "narration": "Deixa eu te mostrar funcionando.",
+      "anchor": "nw"
+    },
+    {
+      "kind": "screen",
+      "seconds": 6,
+      "src": "screen.mp4",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "keys": [
+        {
+          "frame": 0,
+          "cx": 960,
+          "cy": 540,
+          "zoom": 1
+        },
+        {
+          "frame": 30,
+          "cx": 960,
+          "cy": 540,
+          "zoom": 1
+        },
+        {
+          "frame": 80,
+          "cx": 1280,
+          "cy": 690,
+          "zoom": 1.5
+        },
+        {
+          "frame": 140,
+          "cx": 1280,
+          "cy": 690,
+          "zoom": 1.5
+        },
+        {
+          "frame": 179,
+          "cx": 960,
+          "cy": 540,
+          "zoom": 1
+        }
+      ],
+      "narration": "Abra a tela e vá direto ao que importa."
+    },
+    {
+      "kind": "component",
+      "component": "onda/callout",
+      "seconds": 3,
+      "narration": "Aqui está o detalhe que faz a diferença."
+    },
+    {
+      "kind": "component",
+      "component": "onda/progress-steps",
+      "seconds": 4,
+      "narration": "São três passos, nada além disso."
+    },
+    {
+      "kind": "component",
+      "component": "onda/highlight",
+      "seconds": 3,
+      "narration": "E pronto, o resultado aparece."
+    },
+    {
+      "kind": "title",
+      "seconds": 4,
+      "eyebrow": "EXPERIMENTE",
+      "closing": true,
+      "title": "Tente você mesmo.",
+      "subtitle": "Link ou instrução aqui.",
+      "narration": "Agora tente você mesmo.",
+      "anchor": "c"
+    }
   ]
 }

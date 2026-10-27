@@ -87,6 +87,12 @@ Taste is iterative — but the loop must terminate. Bound it so a weak model can
 BUDGET: at most 3 fix passes per hero frame. Fix highest-impact first; stop early when
 every rubric gate is "yes," or when the budget is spent and the best candidate is shippable.
 
+0. GATE DETERMINISTICALLY FIRST (free, no eyeballing): scripts/lint_taste.py storyboard.json
+   (palette contrast, <=2 families, title-fit floor) and, on the rendered PNG,
+   scripts/lint_frame.py hero.png --accent <hex> (accent budget <=~10-15% area, measured
+   contrast, title-safe edge air, blank check). A hard fail here is non-negotiable — fix it
+   before you spend judgment on it. These catch the measurable half of §2 so the LOOK is for
+   the half a linter can't see (does the hierarchy actually lead the eye, does it feel alive).
 1. Render the HERO FRAME of each candidate scene (the held moment), not frame 0.
    (scripts/still.py --frame N --out hero.png renders ONE frame in seconds; or ffmpeg look.py on a clip.)
 2. LOOK. Walk §2 out loud, naming each miss with its number/measurement.
