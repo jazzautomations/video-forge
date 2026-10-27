@@ -18,16 +18,23 @@ agent/model, author's home directory or paid service is required by this skill.
 ## Golden path — for a complete video, do exactly this
 
 Do NOT explore the code, hand-author assets, or hand-tune pixels. The code owns all
-layout, font-fit and narration-timing math. You only edit text and parameters in one
-small JSON file. Run these four steps in order:
+layout, font-fit and narration-timing math. You pick an **archetype** (the structure) and
+a **theme** (the look); `compose.py` stamps them into one valid storyboard JSON; then you
+edit ONLY that file's text/seconds/numbers. Run these steps in order:
 
 ```bash
 # 1. Prepare the local environment ONCE (project-local Python + audio models)
 python3 <skill-dir>/scripts/setup_environment.py --out .video-forge-tools --audio
 
-# 2. Copy the shipped storyboard; edit ONLY its text/seconds/colors/components.
-#    Rewrite the whole file with Write — never do exact-match/surgical edits.
-cp <skill-dir>/assets/storyboard-production.json ./storyboard.json
+# 2. Look at the menus, then COMPOSE a storyboard. Choose the archetype that fits the
+#    brief's JOB and the theme that fits the brand's FEEL — see "Make every video
+#    different" below. compose.py writes a VALID, fully themed storyboard.
+python3 <skill-dir>/scripts/compose.py archetypes   # structures: promo / explainer / demo / data / hype
+python3 <skill-dir>/scripts/compose.py themes        # 9 palettes + fonts + transitions
+python3 <skill-dir>/scripts/compose.py new \
+    --archetype kinetic-promo --theme sunset-warm --brand "ACME" --out ./storyboard.json
+#    Add --seed N to re-arrange interchangeable scenes for a fresh take.
+#    Then edit ONLY the text/narration/seconds/numbers in ./storyboard.json.
 
 # 3. Validate, then render to MP4. run.py is THE entrypoint: it picks the prepared
 #    interpreter and model paths and runs voice→captions→scenes→sound→render→checks.
@@ -41,11 +48,26 @@ python3 <skill-dir>/scripts/run.py ./storyboard.json --out ./film
 python3 <skill-dir>/scripts/verify_video.py ./film/out/final.mp4 --require-audio
 ```
 
-Rules for a weak model: the storyboard JSON is the ONLY thing you edit. Never invoke
-`produce.py`/`build_project.py` with system `python3` for the full video — always go
-through `run.py`. Never edit a `.tsx`/`.py` source file to change size, layout or text;
-pass it as a storyboard parameter instead. If a title or card looks wrong, change its
-JSON value, not its code — the layout math is deterministic and already fits the frame.
+**Make every video different — this is the point of compose.py.** The old failure mode of
+this skill was shipping the same green-on-dark five-beat film every time. Do not repeat it.
+Pick deliberately:
+- **Archetype by the job:** launch/teaser → `kinetic-promo` or `launch-hype`; teaching or
+  pitch → `calm-explainer`; product walkthrough with a recording → `screen-demo`;
+  results/metrics → `data-story`.
+- **Theme by the brand feel:** 9 ship (`compose.py themes`) — e.g. `paper-ink` (light
+  serif), `terminal-green` (dev/hacker), `royal-gold` (luxe), `ocean-steel` (corporate),
+  `cyber-magenta`/`electric-indigo` (bold tech), `mono-noir` (minimal). 5 archetypes × 9
+  themes = 45 distinct looks before you touch a word; `--seed` multiplies that.
+- Never ship the `midnight-lime` / WOHACKERS defaults unless the brand truly is lime-on-dark.
+  If asked for options, compose 2–3 with different theme/`--seed` and compare frames.
+
+Rules for a weak model: compose.py writes a valid storyboard; you then edit ONLY its
+text/narration/seconds/numbers. Never invoke `produce.py`/`build_project.py` with system
+`python3` for the full video — always go through `run.py`. Never edit a `.tsx`/`.py` source
+file to change size, layout or text. To vary motion, swap a scene's `component` for another
+id from `compose.py components <query>` (every listed id renders through the compiler); to
+re-theme, re-run compose.py or change the spec's `background`/`textColor`/`accent`/
+`fontFamily`/`transition`. The layout math is deterministic and already fits the frame.
 
 ## Start with the smallest useful context
 
@@ -54,9 +76,11 @@ supplied brand/reference. Ask only for material missing decisions. For a new pro
 save `DESIGN.md` and `STORYBOARD.md`: one purpose per scene, duration, renderer,
 asset, camera move and audio cue. Match dimensions/fps before mixing renderers.
 
-For a complete promo/tutorial, the default is the **production recipe** above, not the
-old silent four-kind smoke test. Read [production direction](references/production-direction.md)
-and start from `assets/storyboard-production.json`. `scripts/run.py` carries the plan
+For a complete promo/tutorial, the default is the **compose recipe** above, not the
+old silent four-kind smoke test. Read [production direction](references/production-direction.md).
+Compose from `assets/archetypes/*.json` + `assets/themes.json` with `scripts/compose.py`
+rather than copying one fixed storyboard; `assets/storyboard-production.json` remains as a
+single hand-written reference. `scripts/run.py` carries the plan
 through voice, word captions, coherent scenes, sound, render and export checks (it calls
 `produce.py` for you using the prepared interpreter). If local audio dependencies are
 absent, `scripts/setup_environment.py --out .video-forge-tools --audio` prepares a
@@ -78,10 +102,15 @@ an evaluation. Custom code is appropriate when the catalog genuinely does not fi
 ## Search actual code before inventing motion
 
 ```bash
-python3 <skill-dir>/scripts/catalog.py 'character'
-python3 <skill-dir>/scripts/catalog.py 'caption'
+python3 <skill-dir>/scripts/compose.py components 'chart'   # render-safe picks, * = ready
+python3 <skill-dir>/scripts/catalog.py 'character'          # full 681-item catalog (all engines)
 python3 <skill-dir>/scripts/catalog.py 'terminal'
 ```
+
+`assets/safe-components.json` is the vetted subset (119 onda/rendercomp scenes) that
+compiles straight through `build_project.py`; put any of those ids in a `component` scene.
+The wider `catalog.py` also surfaces HyperFrames/Blender/FFmpeg pieces that need their own
+engines — use those via the routing table below, not the `component` scene kind.
 
 For a brief that fits the starter's title/character/screen/3D vocabulary, have the
 model fill `assets/storyboard-example.json` using `assets/storyboard.schema.json`:
@@ -100,8 +129,9 @@ times into the render, masters the soundtrack and exports a contact sheet.
 See [library catalog](library/README.md). Bundled source, with upstream licenses:
 - `library/vendor/rendercomp/`: 50 code-drawn scenes, typography, transitions, charts,
   and SVG characters. Each component exports defaults, FPS and duration.
-- `library/vendor/curvable/`: 14 parameterized launch-video scenes; inspect optional
-  shader/font/WASM dependencies before using a component.
+- `library/vendor/curvable/`: 14 parameterized launch-video scenes (own palette). 10 are
+  wired into the `component` scene kind (`curvable/<slug>`) and listed by `compose.py
+  components`; the 4 that need `ogl` (WebGL) are excluded. Each brings its own colours.
 - `library/vendor/onda/`: components, Zod schemas, transitions and composition helpers.
   Parse defaults through the schema; preserve relative imports and load theme/fonts.
 - `library/vendor/ffmpeg/`: executable local Python editing helpers: cuts, joins,
@@ -127,6 +157,35 @@ retains upstream terms. Their code is not automatically tested by being bundled.
 
 For downloaded clips/stock use [media pipeline](references/media-pipeline.md).
 For motion decisions use [motion principles](references/motion-principles.md).
+
+## Assemble a multi-engine film
+
+One video can mix engines: a HyperFrames (HTML/GSAP) intro, a Remotion archetype body,
+real footage. `scripts/assemble.py` renders each segment with its engine and joins them
+into one MP4, normalising resolution/fps/audio via the FFmpeg layer. Write a manifest and
+run it:
+
+```bash
+cat > film.json <<'JSON'
+{ "width":1920,"height":1080,"fps":30,"transition":"fade","out":"film.mp4",
+  "segments":[
+    {"engine":"hyperframes","dir":"library/hyperframes/editorial"},
+    {"engine":"remotion","storyboard":"promo.json"},
+    {"engine":"video","src":"capture.mp4","start":2,"duration":6}
+  ] }
+JSON
+python3 <skill-dir>/scripts/assemble.py film.json --dry-run     # show the plan
+python3 <skill-dir>/scripts/assemble.py film.json               # render + join + verify
+```
+
+Engines: `video` (a clip you already rendered — e.g. a narrated Remotion film from
+`run.py` — optionally trimmed), `hyperframes` (render a HyperFrames project dir), and
+`remotion` (compile+render a storyboard silent; pass `"nodeModules"` to skip install).
+A `"music"` bed is ducked under the film. **FFmpeg must be sound:** a broken `ffprobe`
+that reports duration 0 silently breaks joins and HyperFrames' own artifact check;
+assemble.py probes a 1 s test clip and refuses a broken toolchain — point it at a good one
+with `--ffmpeg-dir <dir>` or `$VIDEO_FORGE_FFMPEG_DIR`.
+
 Check [research](references/research.md) for studied skills/libraries and why they fit.
 See [external libraries](references/libraries.md) (and `research/libraries-catalog.json`)
 for a license-vetted routing map: what is safe to bundle vs cite for each kind of job.

@@ -1,0 +1,31 @@
+{
+  "_meta": {"name": "calm-explainer", "beats": 7, "feel": "measured, informative, chapters + numbers + a quote", "defaultTheme": "ocean-steel"},
+  "width": 1920, "height": 1080, "fps": 30,
+  "brand": "YOUR BRAND",
+  "background": "#0C1A24", "textColor": "#E8F4FA", "accent": "#37C7E0",
+  "fontFamily": "Verdana,Geneva,sans-serif", "titleAdvance": 0.63, "transition": "fade",
+  "voice": "pf_dora", "voiceLanguage": "pt-br", "music": true,
+  "durationSeconds": 26,
+  "scenes": [
+    {"kind": "title", "seconds": 4, "eyebrow": "COMO FUNCIONA",
+     "title": "O problema, explicado.", "subtitle": "Em um minuto, sem enrolação.",
+     "narration": "Vamos explicar o problema em um minuto."},
+    {"kind": "component", "component": "onda/chapter-card", "seconds": 3,
+     "props": {"number": "01", "chapter": "O ponto de partida"},
+     "narration": "Primeiro, o ponto de partida."},
+    {"kind": "component", "component": "onda/stat-card", "seconds": 4,
+     "props": {"value": 1247, "label": "pessoas afetadas por semana"},
+     "narration": "Mil duzentas e quarenta e sete pessoas por semana."},
+    {"kind": "component", "component": "onda/bar-chart", "seconds": 4,
+     "narration": "Os números deixam o padrão claro."},
+    {"kind": "component", "component": "onda/quote-card", "seconds": 4,
+     "props": {"quote": "Uma frase que resume o porquê disso tudo.", "author": "Fulano", "role": "Cargo"},
+     "narration": "E é por isso que isso importa."},
+    {"kind": "character", "seconds": 3,
+     "props": {"title": "A solução.", "subtitle": "Simples assim."},
+     "narration": "A solução é simples assim."},
+    {"kind": "title", "seconds": 4, "eyebrow": "COMECE", "closing": true,
+     "title": "Agora é com você.", "subtitle": "Próximo passo aqui.",
+     "narration": "Agora é com você."}
+  ]
+}

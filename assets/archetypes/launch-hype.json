@@ -1,0 +1,31 @@
+{
+  "_meta": {"name": "launch-hype", "beats": 7, "feel": "high-energy teaser: neon, starfield, decrypt, marquee", "defaultTheme": "terminal-green"},
+  "width": 1920, "height": 1080, "fps": 30,
+  "brand": "YOUR BRAND",
+  "background": "#07120C", "textColor": "#CFF8DC", "accent": "#27F08A",
+  "fontFamily": "'Courier New',ui-monospace,monospace", "titleAdvance": 0.62, "transition": "iris",
+  "voice": "pf_dora", "voiceLanguage": "pt-br", "music": true,
+  "durationSeconds": 22,
+  "scenes": [
+    {"kind": "component", "component": "rendercomp/starfield", "seconds": 3,
+     "props": {"label": "EM BREVE"},
+     "narration": "Uma coisa nova está chegando."},
+    {"kind": "component", "component": "rendercomp/neon-sign", "seconds": 3,
+     "props": {"signText": "LIVE", "subText": "contagem regressiva"},
+     "narration": "Ao vivo, em contagem regressiva."},
+    {"kind": "title", "seconds": 4, "eyebrow": "LANÇAMENTO",
+     "title": "O nome do lançamento.", "subtitle": "A frase que provoca.",
+     "narration": "Esse é o lançamento."},
+    {"kind": "component", "component": "rendercomp/scramble-text", "seconds": 3,
+     "props": {"text": "ACESSO LIBERADO", "label": "DECIFRANDO"},
+     "narration": "Acesso liberado."},
+    {"kind": "component", "component": "onda/marquee", "seconds": 2,
+     "props": {"items": ["NOVO", "RÁPIDO", "SEU", "AGORA"]},
+     "narration": "Novo, rápido, seu."},
+    {"kind": "three", "seconds": 3, "title": "Chegou.",
+     "narration": "Chegou."},
+    {"kind": "component", "component": "rendercomp/end-card", "seconds": 4,
+     "props": {"title": "Já disponível", "subtitle": "ENTRE NA LISTA", "ctaText": "seusite.com.br"},
+     "narration": "Já disponível. Entre na lista."}
+  ]
+}

@@ -6,8 +6,8 @@ import {AbsoluteFill,Easing,interpolate,useCurrentFrame,useVideoConfig} from 're
  *  Escape hatches (titleSize/maxTitleSize/fontFamily) exist but are rarely needed. */
 export const EditorialTitle:React.FC<{
  title:string;subtitle?:string;eyebrow?:string;background?:string;color?:string;accent?:string;closing?:boolean;
- titleSize?:number;maxTitleSize?:number;fontFamily?:string;
-}>=({title,subtitle,eyebrow,background='#101710',color='#F3F1E9',accent='#D7FF64',closing=false,titleSize,maxTitleSize,fontFamily='Arial,sans-serif'})=>{
+ titleSize?:number;maxTitleSize?:number;fontFamily?:string;advance?:number;
+}>=({title,subtitle,eyebrow,background='#101710',color='#F3F1E9',accent='#D7FF64',closing=false,titleSize,maxTitleSize,fontFamily='Arial,sans-serif',advance=0.54})=>{
  const frame=useCurrentFrame();const {width,height,fps}=useVideoConfig();
  const progress=(start:number,seconds:number)=>interpolate(frame,[start*fps,(start+seconds)*fps],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp',easing:Easing.out(Easing.cubic)});
  const hero=progress(.1,.6),rule=progress(.28,.6),sub=progress(.5,.45);
@@ -16,7 +16,7 @@ export const EditorialTitle:React.FC<{
  // glyph advance for bold Arial (≈0.54·fontSize, letterSpacing is negative so this is safe).
  // size ≤ fit guarantees the single longest line never overflows horizontally.
  const avail=(width-2*120*unit)*0.96;
- const fit=avail/Math.max(1,title.length*0.54);
+ const fit=avail/Math.max(1,title.length*Math.max(0.54,advance));
  const cap=maxTitleSize??174*unit;
  const size=titleSize??Math.min(cap,fit);
  const bg=closing?accent:background,fg=closing?background:color;
