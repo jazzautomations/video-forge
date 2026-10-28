@@ -155,7 +155,7 @@ def main():
               if family=='onda' else "{{background:spec.background??'#101710'}}")
         component_cases.append(f"if(s.component==={json.dumps(scene['component'])}) return <AbsoluteFill style={wrap}><Piece{i} {{...({props})}}/></AbsoluteFill>;")
     clauses=["if(s.kind==='title') return <EditorialTitle title={s.title} subtitle={s.subtitle} eyebrow={s.eyebrow??spec.brand} background={spec.background} color={spec.textColor} accent={spec.accent} closing={s.closing??false} titleSize={s.titleSize} maxTitleSize={s.maxTitleSize} displayFont={spec.displayFont??spec.fontFamily??'Arial,sans-serif'} textFont={spec.textFont??spec.fontFamily??'Arial,sans-serif'} advance={spec.titleAdvance??0.54} anchor={s.anchor} rule={s.rule} {...s.props}/>;"]
-    if 'character' in kinds:clauses.append("if(s.kind==='character') return <CharacterPresenter {...defaultCharacterProps} backgroundColor={spec.background??'#101710'} bodyColor={spec.accent??'#D7FF64'} accentColor={spec.accent??'#D7FF64'} textColor={spec.textColor??'#F3F1E9'} skinColor='#DFA06A' {...s.props}/>;")
+    if 'character' in kinds:clauses.append("if(s.kind==='character') return <CharacterPresenter {...defaultCharacterProps} backgroundColor={spec.background??'#101710'} bodyColor={spec.accent??'#D7FF64'} accentColor={spec.accent??'#D7FF64'} textColor={spec.textColor??'#F3F1E9'} skinColor='#DFA06A' seed={spec.characterSeed??spec.brand??'video-forge'} {...s.props}/>;")
     if 'screen' in kinds:clauses.append("if(s.kind==='screen') return <ScreenFocus {...s} src={staticFile(s.src)}/>;")
     if 'three' in kinds:clauses.append("if(s.kind==='three') return <AbsoluteFill><ProceduralObject3D color={s.color??spec.accent}/>{s.title&&<div style={{position:'absolute',left:'6%',top:'9%',fontFamily:spec.displayFont??spec.fontFamily??'Arial',fontSize:56,color:spec.textColor??'#F3F1E9',fontWeight:750}}>{s.title}</div>}</AbsoluteFill>;")
     clauses.extend(component_cases)
@@ -179,6 +179,7 @@ registerRoot(()=><Composition id="Video" component={Video} durationInFrames={tot
         if dependency.startswith('@remotion/'):deps[dependency]='4.0.538'
         elif dependency not in {'react','react-dom','remotion','zod'}:raise ValueError(f'Selected component needs additional dependency {dependency}; inspect its upstream package manifest')
     if 'three' in kinds:deps.update({'@remotion/three':'4.0.538','@react-three/fiber':'9.6.0','three':'0.182.0','@types/three':'0.182.0'})
+    if 'character' in kinds:deps.update({'@dicebear/core':'9.4.3','@dicebear/collection':'9.4.2'})
     package={'name':'video-forge-project','version':'1.0.0','private':True,'license':'MIT','dependencies':deps,'devDependencies':{'typescript':'5.9.3','@types/react':'19.2.7'},'scripts':{'studio':'remotion studio src/index.tsx','render':'remotion render src/index.tsx Video out/video.mp4','check':'tsc --noEmit'}}
     (out/'package.json').write_text(json.dumps(package,indent=2)+'\n')
     (out/'tsconfig.json').write_text(json.dumps({'compilerOptions':{'jsx':'react-jsx','target':'ES2020','lib':['ES2020','DOM'],'module':'ESNext','moduleResolution':'Bundler','esModuleInterop':True,'resolveJsonModule':True,'strict':True,'skipLibCheck':True,'noEmit':True},'include':['src']},indent=2)+'\n')
