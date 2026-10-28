@@ -19,7 +19,7 @@ def _taste_lint(data):
         return {'ok': True, 'fails': [], 'warns': [f'taste lint unavailable: {e}'], 'checks': {}}
 
 ROOT = Path(__file__).resolve().parents[1]
-KINDS = {'title', 'character', 'screen', 'three', 'component', 'character3d', 'lottie', 'iconstrip', 'particles'}
+KINDS = {'title', 'character', 'screen', 'three', 'component', 'character3d', 'lottie', 'iconstrip', 'particles', 'figure3d'}
 
 # Loads the theme's vendored .woff2 (public/fonts) via the FontFace API and holds the
 # render with delayRender until each face is ready, so a frame never snapshots in a
@@ -117,7 +117,7 @@ def main():
     if 'character' in kinds:
         shutil.copy2(ROOT/'library/scenes/CharacterPresenter.tsx',out/'src/CharacterPresenter.tsx')
         imports.append("import {CharacterPresenter,defaultCharacterProps} from './CharacterPresenter';")
-    for kind,name in [('screen','ScreenFocus'),('three','ProceduralObject3D'),('character3d','Character3D'),('lottie','LottieClip'),('iconstrip','IconStrip'),('particles','Particles')]:
+    for kind,name in [('screen','ScreenFocus'),('three','ProceduralObject3D'),('character3d','Character3D'),('lottie','LottieClip'),('iconstrip','IconStrip'),('particles','Particles'),('figure3d','CharacterProcedural')]:
         if kind in kinds:
             shutil.copy2(ROOT/f'library/scenes/{name}.tsx',out/f'src/{name}.tsx')
             imports.append(f"import {{{name}}} from './{name}';")
@@ -175,6 +175,7 @@ def main():
     if 'character3d' in kinds:clauses.append("if(s.kind==='character3d') return <Character3D model={s.model} clip={s.clip} seed={spec.characterSeed??spec.brand??'forge'} background={spec.background} accent={spec.accent} textColor={spec.textColor} title={s.title} subtitle={s.subtitle} {...s.props}/>;")
     if 'lottie' in kinds:clauses.append("if(s.kind==='lottie') return <LottieClip file={s.file} loop={s.loop??false} playbackRate={s.playbackRate??1} background={spec.background} accent={spec.accent} title={s.title} subtitle={s.subtitle} {...s.props}/>;")
     if 'iconstrip' in kinds:clauses.append("if(s.kind==='iconstrip') return <IconStrip icons={s.icons} seed={spec.backdropSeed??spec.brand??'forge'} background={spec.background} accent={spec.accent} textColor={spec.textColor} title={s.title} subtitle={s.subtitle} {...s.props}/>;")
+    if 'figure3d' in kinds:clauses.append("if(s.kind==='figure3d') return <CharacterProcedural seed={s.seed??spec.characterSeed??spec.brand??'forge'} mode={s.mode} background={spec.background} accent={spec.accent} textColor={spec.textColor} title={s.title} subtitle={s.subtitle} {...s.props}/>;")
     if 'particles' in kinds:clauses.append("if(s.kind==='particles') return <AbsoluteFill style={{backgroundColor:spec.background}}><Particles seed={spec.backdropSeed??spec.brand??'forge'} accent={spec.accent} background={spec.background} count={s.count} {...s.props}/>{s.title&&<div style={{position:'absolute',left:'6%',bottom:'9%',fontFamily:spec.displayFont??spec.fontFamily??'Arial',fontSize:64,fontWeight:800,color:spec.textColor}}>{s.title}</div>}</AbsoluteFill>;")
     clauses.extend(component_cases)
     code='\n'.join(imports)+'''\nconst fps=spec.fps;
@@ -199,6 +200,7 @@ registerRoot(()=><Composition id="Video" component={Video} durationInFrames={tot
     if 'three' in kinds:deps.update({'@remotion/three':'4.0.538','@react-three/fiber':'9.6.0','three':'0.182.0','@types/three':'0.182.0'})
     if 'character' in kinds:deps.update({'@dicebear/core':'9.4.3','@dicebear/collection':'9.4.2'})
     if 'character3d' in kinds:deps.update({'@remotion/three':'4.0.538','@react-three/fiber':'9.6.0','@react-three/drei':'10.8.1','three':'0.182.0','@types/three':'0.182.0'})
+    if 'figure3d' in kinds:deps.update({'@remotion/three':'4.0.538','@react-three/fiber':'9.6.0','three':'0.182.0','@types/three':'0.182.0'})
     if 'lottie' in kinds:deps.update({'@remotion/lottie':'4.0.538','lottie-web':'5.13.0'})
     if 'iconstrip' in kinds:deps.update({'lucide-react':'0.469.0'})
     package={'name':'video-forge-project','version':'1.0.0','private':True,'license':'MIT','dependencies':deps,'devDependencies':{'typescript':'5.9.3','@types/react':'19.2.7'},'scripts':{'studio':'remotion studio src/index.tsx','render':'remotion render src/index.tsx Video out/video.mp4','check':'tsc --noEmit'}}
