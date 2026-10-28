@@ -166,6 +166,16 @@ compiles straight through `build_project.py`; put any of those ids in a `compone
 The wider `catalog.py` also surfaces HyperFrames/Blender/FFmpeg pieces that need their own
 engines — use those via the routing table below, not the `component` scene kind.
 
+**Asset-backed scene kinds (the real library — not just text/shapes).** Beyond `title`/`screen`/
+`three`/`component`, these scenes pull in genuine, license-clean, seed-varied assets (all local,
+deterministic, no generative AI):
+- `character` — a DiceBear **Open Peeps** illustrated person (CC0), different per `characterSeed`.
+- `lottie` — a designer-made vector **Lottie** animation, frame-accurate. `{"kind":"lottie","file":"lottie/check-success.json","loop":true}`. Files + licenses in `assets/lottie/CREDITS.md` (all MIT).
+- `iconstrip` — a row of **Lucide** icons (ISC) in themed cards; ONE icon family per video. `{"kind":"iconstrip","icons":["Folder","Terminal","GitBranch"]}`.
+- `particles` — deterministic seeded particle polish (pure code).
+- `character3d` — a rigged **GLB** (CC0/CC-BY, `assets/assets3d/`) with one baked animation driven by frame. `{"kind":"character3d","model":"3d/RobotExpressive.glb","clip":"Dance"}`. Needs a WebGL backend that does skinned meshes (a real browser/GPU; a minimal headless GL may render it blank — see the component header).
+- `title` scenes now sit on a seeded **generative backdrop + film grain** (`Backdrop.tsx`) so they aren't flat.
+
 For a brief that fits the starter's title/character/screen/3D vocabulary, have the
 model fill `assets/storyboard-example.json` using `assets/storyboard.schema.json`:
 

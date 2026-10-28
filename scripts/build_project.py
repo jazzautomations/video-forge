@@ -19,7 +19,7 @@ def _taste_lint(data):
         return {'ok': True, 'fails': [], 'warns': [f'taste lint unavailable: {e}'], 'checks': {}}
 
 ROOT = Path(__file__).resolve().parents[1]
-KINDS = {'title', 'character', 'screen', 'three', 'component'}
+KINDS = {'title', 'character', 'screen', 'three', 'component', 'character3d', 'lottie', 'iconstrip', 'particles'}
 
 # Loads the theme's vendored .woff2 (public/fonts) via the FontFace API and holds the
 # render with delayRender until each face is ready, so a frame never snapshots in a
@@ -117,10 +117,24 @@ def main():
     if 'character' in kinds:
         shutil.copy2(ROOT/'library/scenes/CharacterPresenter.tsx',out/'src/CharacterPresenter.tsx')
         imports.append("import {CharacterPresenter,defaultCharacterProps} from './CharacterPresenter';")
-    for kind,name in [('screen','ScreenFocus'),('three','ProceduralObject3D')]:
+    for kind,name in [('screen','ScreenFocus'),('three','ProceduralObject3D'),('character3d','Character3D'),('lottie','LottieClip'),('iconstrip','IconStrip'),('particles','Particles')]:
         if kind in kinds:
             shutil.copy2(ROOT/f'library/scenes/{name}.tsx',out/f'src/{name}.tsx')
             imports.append(f"import {{{name}}} from './{name}';")
+    # Copy the rigged GLB(s) a character3d scene references from assets/assets3d into public/.
+    if 'character3d' in kinds:
+        for s in data['scenes']:
+            if s.get('kind')=='character3d' and s.get('model'):
+                base=s['model'].split('/')[-1];src=ROOT/'assets/assets3d'/base
+                if not src.exists():raise ValueError(f'character3d references missing model {base} (expected in assets/assets3d/)')
+                dst=out/'public'/s['model'];dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)
+    # Copy the Lottie JSON(s) a lottie scene references from assets/lottie into public/.
+    if 'lottie' in kinds:
+        for s in data['scenes']:
+            if s.get('kind')=='lottie' and s.get('file'):
+                base=s['file'].split('/')[-1];src=ROOT/'assets/lottie'/base
+                if not src.exists():raise ValueError(f'lottie references missing file {base} (expected in assets/lottie/)')
+                dst=out/'public'/s['file'];dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)
     # Vendored fonts: copy just the faces this theme needs into public/fonts, ship the
     # OFL license beside them, and emit a local FontFace loader the entry imports.
     fonts=data.get('fonts') or []
@@ -158,6 +172,10 @@ def main():
     if 'character' in kinds:clauses.append("if(s.kind==='character') return <CharacterPresenter {...defaultCharacterProps} backgroundColor={spec.background??'#101710'} bodyColor={spec.accent??'#D7FF64'} accentColor={spec.accent??'#D7FF64'} textColor={spec.textColor??'#F3F1E9'} skinColor='#DFA06A' seed={spec.characterSeed??spec.brand??'video-forge'} {...s.props}/>;")
     if 'screen' in kinds:clauses.append("if(s.kind==='screen') return <ScreenFocus {...s} src={staticFile(s.src)}/>;")
     if 'three' in kinds:clauses.append("if(s.kind==='three') return <AbsoluteFill><ProceduralObject3D color={s.color??spec.accent}/>{s.title&&<div style={{position:'absolute',left:'6%',top:'9%',fontFamily:spec.displayFont??spec.fontFamily??'Arial',fontSize:56,color:spec.textColor??'#F3F1E9',fontWeight:750}}>{s.title}</div>}</AbsoluteFill>;")
+    if 'character3d' in kinds:clauses.append("if(s.kind==='character3d') return <Character3D model={s.model} clip={s.clip} seed={spec.characterSeed??spec.brand??'forge'} background={spec.background} accent={spec.accent} textColor={spec.textColor} title={s.title} subtitle={s.subtitle} {...s.props}/>;")
+    if 'lottie' in kinds:clauses.append("if(s.kind==='lottie') return <LottieClip file={s.file} loop={s.loop??false} playbackRate={s.playbackRate??1} background={spec.background} accent={spec.accent} title={s.title} subtitle={s.subtitle} {...s.props}/>;")
+    if 'iconstrip' in kinds:clauses.append("if(s.kind==='iconstrip') return <IconStrip icons={s.icons} seed={spec.backdropSeed??spec.brand??'forge'} background={spec.background} accent={spec.accent} textColor={spec.textColor} title={s.title} subtitle={s.subtitle} {...s.props}/>;")
+    if 'particles' in kinds:clauses.append("if(s.kind==='particles') return <AbsoluteFill style={{backgroundColor:spec.background}}><Particles seed={spec.backdropSeed??spec.brand??'forge'} accent={spec.accent} background={spec.background} count={s.count} {...s.props}/>{s.title&&<div style={{position:'absolute',left:'6%',bottom:'9%',fontFamily:spec.displayFont??spec.fontFamily??'Arial',fontSize:64,fontWeight:800,color:spec.textColor}}>{s.title}</div>}</AbsoluteFill>;")
     clauses.extend(component_cases)
     code='\n'.join(imports)+'''\nconst fps=spec.fps;
 const frames=spec.scenes.map(s=>Math.max(1,Math.round(s.seconds*fps)));
@@ -180,6 +198,9 @@ registerRoot(()=><Composition id="Video" component={Video} durationInFrames={tot
         elif dependency not in {'react','react-dom','remotion','zod'}:raise ValueError(f'Selected component needs additional dependency {dependency}; inspect its upstream package manifest')
     if 'three' in kinds:deps.update({'@remotion/three':'4.0.538','@react-three/fiber':'9.6.0','three':'0.182.0','@types/three':'0.182.0'})
     if 'character' in kinds:deps.update({'@dicebear/core':'9.4.3','@dicebear/collection':'9.4.2'})
+    if 'character3d' in kinds:deps.update({'@remotion/three':'4.0.538','@react-three/fiber':'9.6.0','@react-three/drei':'10.8.1','three':'0.182.0','@types/three':'0.182.0'})
+    if 'lottie' in kinds:deps.update({'@remotion/lottie':'4.0.538','lottie-web':'5.13.0'})
+    if 'iconstrip' in kinds:deps.update({'lucide-react':'0.469.0'})
     package={'name':'video-forge-project','version':'1.0.0','private':True,'license':'MIT','dependencies':deps,'devDependencies':{'typescript':'5.9.3','@types/react':'19.2.7'},'scripts':{'studio':'remotion studio src/index.tsx','render':'remotion render src/index.tsx Video out/video.mp4','check':'tsc --noEmit'}}
     (out/'package.json').write_text(json.dumps(package,indent=2)+'\n')
     (out/'tsconfig.json').write_text(json.dumps({'compilerOptions':{'jsx':'react-jsx','target':'ES2020','lib':['ES2020','DOM'],'module':'ESNext','moduleResolution':'Bundler','esModuleInterop':True,'resolveJsonModule':True,'strict':True,'skipLibCheck':True,'noEmit':True},'include':['src']},indent=2)+'\n')

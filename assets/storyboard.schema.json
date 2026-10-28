@@ -73,9 +73,19 @@
               "character",
               "screen",
               "three",
-              "component"
+              "component",
+              "character3d",
+              "lottie",
+              "iconstrip",
+              "particles"
             ]
           },
+          "model": { "type": "string", "description": "character3d: rigged GLB in assets/assets3d (e.g. '3d/RobotExpressive.glb')" },
+          "clip": { "description": "character3d: baked clip name (case-insensitive) or index; default first" },
+          "file": { "type": "string", "description": "lottie: JSON in assets/lottie (e.g. 'lottie/check-success.json')" },
+          "loop": { "type": "boolean", "description": "lottie: loop the animation" },
+          "icons": { "type": "array", "items": { "type": "string" }, "description": "iconstrip: lucide-react export names (one family per video)" },
+          "count": { "type": "number", "description": "particles: number of particles" },
           "seconds": {
             "type": "number",
             "exclusiveMinimum": 0,
