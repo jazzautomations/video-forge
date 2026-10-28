@@ -1,5 +1,6 @@
 import React from 'react';
 import {AbsoluteFill,Easing,interpolate,useCurrentFrame,useVideoConfig} from 'remotion';
+import {Backdrop} from './Backdrop';
 
 /** The demo's editorial direction as reusable code: hierarchy, rule, stagger and hold.
  *  Font size is computed to PROVABLY fit the frame width — the model never tunes pixels.
@@ -7,8 +8,8 @@ import {AbsoluteFill,Easing,interpolate,useCurrentFrame,useVideoConfig} from 're
 export const EditorialTitle:React.FC<{
  title:string;subtitle?:string;eyebrow?:string;background?:string;color?:string;accent?:string;closing?:boolean;
  titleSize?:number;maxTitleSize?:number;fontFamily?:string;displayFont?:string;textFont?:string;advance?:number;
- anchor?:'nw'|'n'|'ne'|'w'|'c'|'e'|'sw'|'s'|'se';rule?:boolean;
-}>=({title,subtitle,eyebrow,background='#101710',color='#F3F1E9',accent='#D7FF64',closing=false,titleSize,maxTitleSize,fontFamily,displayFont,textFont,advance=0.54,anchor='w',rule=true})=>{
+ anchor?:'nw'|'n'|'ne'|'w'|'c'|'e'|'sw'|'s'|'se';rule?:boolean;seed?:string;
+}>=({title,subtitle,eyebrow,background='#101710',color='#F3F1E9',accent='#D7FF64',closing=false,titleSize,maxTitleSize,fontFamily,displayFont,textFont,advance=0.54,anchor='w',rule=true,seed='forge'})=>{
  const text=textFont??fontFamily??'Arial,sans-serif';const display=displayFont??fontFamily??text;
  // Anchor the whole block to a point on a compass, so not every title is dead-center:
  // 'sw' = bottom-left editorial, 'ne' = top-right, 'c' = centered, 'w' = left (default).
@@ -29,10 +30,10 @@ export const EditorialTitle:React.FC<{
  const cap=maxTitleSize??174*unit;
  const size=titleSize??Math.min(cap,fit);
  const bg=closing?accent:background,fg=closing?background:color;
- return <AbsoluteFill style={{background:bg,color:fg,fontFamily:text,justifyContent:vert,alignItems:horiz,textAlign:align,padding:`${90*unit}px ${120*unit}px`,gap:28*unit}}>
+ return <AbsoluteFill style={{background:closing?bg:background}}>{closing?null:<Backdrop seed={seed} background={background} accent={accent}/>}<AbsoluteFill style={{color:fg,fontFamily:text,justifyContent:vert,alignItems:horiz,textAlign:align,padding:`${90*unit}px ${120*unit}px`,gap:28*unit}}>
   {eyebrow?<div style={{fontFamily:'monospace',fontSize:24*unit,letterSpacing:5*unit,color:closing?fg:accent,opacity:progress(0,.35)}}>{eyebrow}</div>:null}
   <div style={{overflow:'hidden'}}><div style={{fontFamily:display,fontSize:size,fontWeight:850,letterSpacing:-size*.045,lineHeight:1.02,maxWidth:'96%',transform:`translateY(${(1-hero)*160*unit}px)`}}>{title}</div></div>
   {rule?<div style={{width:'90%',height:4*unit,background:closing?fg:accent,transformOrigin:ruleOrigin,transform:`scaleX(${ruleP})`}}/>:null}
   {subtitle&&<div style={{fontSize:35*unit,lineHeight:1.35,maxWidth:'88%',opacity:sub,transform:`translateY(${(1-sub)*18*unit}px)`}}>{subtitle}</div>}
- </AbsoluteFill>;
+ </AbsoluteFill></AbsoluteFill>;
 };

@@ -199,8 +199,10 @@ def _compose(archetype, theme_name, seed, brand, brand_profile=None):
     spec['durationSeconds'] = round(sum(s['seconds'] for s in spec['scenes']), 4)
     # Deterministic-but-varied character seed (DiceBear Open Peeps, CC0): different brand/theme/seed
     # -> a different cast, so videos stop sharing one face. Only set it when a character scene exists.
+    _id = f"{spec.get('brand') or brand or archetype}-{theme_name}-{seed}"
+    spec['backdropSeed'] = _id  # seeds the generative backdrop + grain so title scenes aren't flat
     if any(s.get('kind') == 'character' for s in spec['scenes']):
-        spec['characterSeed'] = f"{spec.get('brand') or brand or archetype}-{theme_name}-{seed}"
+        spec['characterSeed'] = _id
     spec.setdefault('_meta', {}).update({'theme': theme_name, 'seed': seed, 'archetype': archetype})
     return spec, validate(spec)
 
