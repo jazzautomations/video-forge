@@ -17,6 +17,12 @@ CharacterPresenter preserves RenderComp's copyright/SPDX notice.
 | Open Peeps character artwork by Pablo Stanley — CC0 1.0 (public domain, no attribution required) | rendered by the `character` scene via DiceBear's open-peeps style |
 | simplex-noise — MIT | installed via npm (generative backdrop drift) |
 | blobs — MIT | installed via npm (generative backdrop shapes) |
+| three.js / @react-three/fiber / @react-three/drei (character3d) — MIT | installed via npm |
+| @remotion/three, @remotion/lottie (engine integrations) — Remotion License | installed via npm |
+| lottie-web (lottie scene) — MIT | installed via npm |
+| lucide-react (iconstrip) — ISC | installed via npm |
+| Vendored Lottie JSON (assets/lottie) — MIT (useAnimations; airbnb/lottie-web demos; diffusionstudio; Gamote/lottie-react) | assets/lottie/CREDITS.md |
+| 3D models (assets/assets3d): RobotExpressive — CC0-1.0; Fox / CesiumMan / RiggedFigure / RiggedSimple — CC-BY-4.0 (attribution required) | assets/assets3d/CREDITS.md |
 
 Runtime engines are installed separately and are not relicensed by this repository.
 Remotion uses its own license; FFmpeg, Blender, GSAP, model weights, voices
