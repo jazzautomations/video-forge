@@ -173,6 +173,7 @@ deterministic, no generative AI):
 - `lottie` — a designer-made vector **Lottie** animation, frame-accurate. `{"kind":"lottie","file":"lottie/check-success.json","loop":true}`. Files + licenses in `assets/lottie/CREDITS.md` (all MIT).
 - `iconstrip` — a row of **Lucide** icons (ISC) in themed cards; ONE icon family per video. `{"kind":"iconstrip","icons":["Folder","Terminal","GitBranch"]}`.
 - `particles` — deterministic seeded particle polish (pure code).
+- `figure3d` — a **3D mascot built entirely in code** from primitives (capsule body, visor, glowing eyes/antenna), seed-varied proportions + palette, 4 frame-driven modes (`walk`/`wave`/`dance`/`idle`). No model file, no license, and it renders on minimal headless WebGL (unlike rigged GLBs). `{"kind":"figure3d","mode":"wave"}`. This is how most "made with Claude" 3D characters are actually built.
 - `character3d` — a rigged **GLB** (CC0/CC-BY, `assets/assets3d/`) with one baked animation driven by frame. `{"kind":"character3d","model":"3d/RobotExpressive.glb","clip":"Dance"}`. Needs a WebGL backend that does skinned meshes (a real browser/GPU; a minimal headless GL may render it blank — see the component header).
 - `title` scenes now sit on a seeded **generative backdrop + film grain** (`Backdrop.tsx`) so they aren't flat.
 
