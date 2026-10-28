@@ -197,6 +197,10 @@ def _compose(archetype, theme_name, seed, brand, brand_profile=None):
         if s.get('kind') == 'component':
             _stamp_component(s, colors)
     spec['durationSeconds'] = round(sum(s['seconds'] for s in spec['scenes']), 4)
+    # Deterministic-but-varied character seed (DiceBear Open Peeps, CC0): different brand/theme/seed
+    # -> a different cast, so videos stop sharing one face. Only set it when a character scene exists.
+    if any(s.get('kind') == 'character' for s in spec['scenes']):
+        spec['characterSeed'] = f"{spec.get('brand') or brand or archetype}-{theme_name}-{seed}"
     spec.setdefault('_meta', {}).update({'theme': theme_name, 'seed': seed, 'archetype': archetype})
     return spec, validate(spec)
 

@@ -13,6 +13,8 @@ CharacterPresenter preserves RenderComp's copyright/SPDX notice.
 | kajisho5/ffmpeg-skill | library/vendor/ffmpeg/LICENSE |
 | kajisho5/blender-skill | library/vendor/blender/LICENSE |
 | Vendored fonts (Inter, Space Grotesk, JetBrains Mono, Noto Serif, Noto Serif Display, Bricolage Grotesque) — SIL OFL 1.1 | assets/fonts/OFL.txt (attribution in assets/fonts/FONTS.md) |
+| DiceBear core + collection (character scene) — code MIT | installed via npm (@dicebear/core, @dicebear/collection) |
+| Open Peeps character artwork by Pablo Stanley — CC0 1.0 (public domain, no attribution required) | rendered by the `character` scene via DiceBear's open-peeps style |
 
 Runtime engines are installed separately and are not relicensed by this repository.
 Remotion uses its own license; FFmpeg, Blender, GSAP, model weights, voices
